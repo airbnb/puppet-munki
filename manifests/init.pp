@@ -5,9 +5,9 @@
 class munki (
   $munkitools_version             = '2.3.0.2534',
   $apple_software_updates_only    = false,
-  $client_cert_path               = "${::ssldir}/certs/${certname}.pem",
+  $client_cert_path               = "${::ssldir}/certs/${::certname}.pem",
   $client_identifier              = undef,
-  $client_key_path                = "${::ssldir}/private_keys/${certname}.pem",
+  $client_key_path                = "${::ssldir}/private_keys/${::certname}.pem",
   $days_between_notifications     = 1,
   $install_apple_software_updates = true,
   $logging_level                  = 1,
