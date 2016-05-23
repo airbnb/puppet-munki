@@ -16,12 +16,14 @@ class munki::install {
     backup  => false,
     require => File["${::puppet_vardir}/packages"],
   }
-  ->
-  package { "munkitools-${munkitools_version}":
-    ensure   => installed,
-    provider => pkgdmg,
-    source   => "${::puppet_vardir}/packages/munkitools.pkg",
-    require  => File["${::puppet_vardir}/packages/munkitools.pkg"],
+  
+  if $munki_version == "Munki not installed" {
+    package { "munkitools":
+      ensure   => installed,
+      provider => pkgdmg,
+      source   => "${::puppet_vardir}/packages/munkitools.pkg",
+      require  => File["${::puppet_vardir}/packages/munkitools.pkg"],
+    }
   }
 
 }
