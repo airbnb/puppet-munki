@@ -48,7 +48,7 @@ class munki::install {
   }
   
 
-  if $munki_version == "Munki not installed" {
+  if $::munki_version == "Munki not installed" {
     file { "${::puppet_vardir}/packages/munkitools.pkg":
       ensure  => file,
       source  => "puppet:///modules/munki/munkitools-${munkitools_version}.pkg",
@@ -65,7 +65,7 @@ class munki::install {
   }
 
   # Make sure everything is owned by root
-  if $munki_dir_exists {
+  if $::munki_dir_exists == true {
     file {'/usr/local/munki':
       owner   => 'root',
       group   => 'wheel',
