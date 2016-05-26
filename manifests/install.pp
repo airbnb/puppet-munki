@@ -23,7 +23,6 @@ class munki::install {
       
       # Bin the Puppet receipt
       exec { "/bin/rm -f /var/db/.puppet_pkgdmg_installed_munkitools-${munkitools_version}":
-        refreshonly => true,
       }
 
       # Forget the real receipts
