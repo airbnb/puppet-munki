@@ -50,8 +50,7 @@ class munki::install {
 
   }
   
-
-  if $facts['munki_version'] == "Munki not installed" {
+  if $facts['munki_version'] == "Munki not installed" or $facts['munki_dir_exists'] == false {
     file { "${::puppet_vardir}/packages/munkitools.pkg":
       ensure  => file,
       source  => "puppet:///modules/munki/munkitools-${munkitools_version}.pkg",
