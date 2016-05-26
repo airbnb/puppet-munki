@@ -28,15 +28,19 @@ class munki::install {
 
       # Forget the real receipts
       exec {'/usr/sbin/pkgutil --forget com.googlecode.munki.admin':
+        returns => [0, 1]
       }
 
       exec {'/usr/sbin/pkgutil --forget com.googlecode.munki.app':
+        returns => [0, 1]
       }
 
       exec {'/usr/sbin/pkgutil --forget com.googlecode.munki.core':
+        returns => [0, 1]
       }
 
       exec {'/usr/sbin/pkgutil --forget com.googlecode.munki.launchd':
+        returns => [0, 1]
       }
 
       # Bin the cached copy of the profile so it gets reinstalled
@@ -47,7 +51,7 @@ class munki::install {
   }
   
 
-  if $::munki_version == "Munki not installed" {
+  if $facts['munki_version'] == "Munki not installed" {
     file { "${::puppet_vardir}/packages/munkitools.pkg":
       ensure  => file,
       source  => "puppet:///modules/munki/munkitools-${munkitools_version}.pkg",
@@ -64,7 +68,7 @@ class munki::install {
   }
 
   # Make sure everything is owned by root
-  if $::munki_dir_exists == true {
+  if $facts['munki_dir_exists'] == true {
     file {'/usr/local/munki':
       owner   => 'root',
       group   => 'wheel',
