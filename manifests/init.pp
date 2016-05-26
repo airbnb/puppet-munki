@@ -17,6 +17,7 @@ class munki (
   $software_update_server_url     = undef,
   $suppress_user_notification     = false,
   $use_client_cert                = true,
+  $days_before_broken             = 60,
 ){
 
   class { '::munki::config': } ->
