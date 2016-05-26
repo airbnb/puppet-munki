@@ -66,6 +66,7 @@ class munki::install {
     } ~>
     exec {'/usr/local/munki/managedsoftwareupdate --auto': 
       refreshonly => true,
+      timeout     => 0,
     }
   }
 
