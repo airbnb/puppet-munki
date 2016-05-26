@@ -69,11 +69,12 @@ class munki::install {
   }
 
   # Make sure everything is owned by root
-  file {'/usr/local/munki':
-    owner   => 'root',
-    group   => 'wheel',
-    recurse => true,
-    require => Package["munkitools-${munkitools_version}"],
+  if $munki_dir_exists {
+    file {'/usr/local/munki':
+      owner   => 'root',
+      group   => 'wheel',
+      recurse => true,
+    }
   }
 
 }
