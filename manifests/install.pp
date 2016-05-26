@@ -63,6 +63,9 @@ class munki::install {
       provider => pkgdmg,
       source   => "${::puppet_vardir}/packages/munkitools.pkg",
       require  => File["${::puppet_vardir}/packages/munkitools.pkg"],
+    } ~>
+    exec {'/usr/local/munki/managedsoftwareupdate --auto': 
+      refreshonly => true,
     }
   }
 
