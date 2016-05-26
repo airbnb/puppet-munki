@@ -20,8 +20,8 @@ class munki::install {
   if $days_before_broken != 0 {
     if ($facts['munki_last_run_unix'] != undef and ($facts['munki_last_run_unix'] < $broken_days_ago)) or $facts['munki_dir_exists'] == false {
       # Munki has run before, but it's not run for ages
-      notify {"Broken days ago ${broken_days_ago": }
-      notify {"Today ${today": }
+      notify {"Broken days ago ${broken_days_ago}": }
+      notify {"Today ${today}": }
       # Bin the Puppet receipt
       exec { "/bin/rm -f /var/db/.puppet_pkgdmg_installed_munkitools-${munkitools_version}":
       }
@@ -37,7 +37,6 @@ class munki::install {
       }
 
       exec {'/usr/sbin/pkgutil --forget com.googlecode.munki.launchd':
-        refreshonly => true,
       }
 
       # Bin the cached copy of the profile so it gets reinstalled
