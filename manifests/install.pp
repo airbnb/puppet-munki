@@ -27,24 +27,20 @@ class munki::install {
 
       # Forget the real receipts
       exec {'/usr/sbin/pkgutil --forget com.googlecode.munki.admin':
-        refreshonly => true,
-      } ~>
+      }
 
       exec {'/usr/sbin/pkgutil --forget com.googlecode.munki.app':
-        refreshonly => true,
-      } ~>
+      }
 
       exec {'/usr/sbin/pkgutil --forget com.googlecode.munki.core':
-        refreshonly => true,
-      } ~>
+      }
 
       exec {'/usr/sbin/pkgutil --forget com.googlecode.munki.launchd':
         refreshonly => true,
-      } ~>
+      }
 
       # Bin the cached copy of the profile so it gets reinstalled
       exec {"/bin/rm -f ${::puppet_vardir}/mobileconfigs/ManagedInstalls":
-        refreshonly => true,
       }
     }
 
