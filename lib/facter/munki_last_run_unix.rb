@@ -1,7 +1,7 @@
 #munki_last_run_unix.rb
 
 require 'puppet'
-require 'puppet/util/plist'
+require 'puppet/util/plist' if Puppet.features.cfpropertylist?
 require 'time'
 
 # Get the plist dynamically eventually
