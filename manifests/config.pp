@@ -34,7 +34,7 @@ class munki::config {
                                                "LoggingLevel" => $logging_level,
                                               "MSULogEnabled" => $msu_log_enabled,
                                   "SoftwareRepoCACertificate" => $software_repo_ca_cert,
-                                    "SoftwareUpdateServerURL" => $software_update_server_url,
+                                            "SoftwareRepoURL" => $software_repo_url,
                                    "SuppressUserNotification" => $suppress_user_notification,
                                        "UseClientCertificate" => $use_client_cert
                             }
