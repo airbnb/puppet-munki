@@ -16,7 +16,7 @@ class munki (
   $software_repo_url              = 'https://***REMOVED***',
   $software_update_server_url     = undef,
   $suppress_user_notification     = false,
-  $use_client_cert                = true,
+  $use_client_cert                = false,
   $days_before_broken             = 60,
 ){
 
