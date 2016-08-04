@@ -3,7 +3,7 @@
 # Installs and configures munki
 
 class munki (
-  $munkitools_version             = '2.7.0.2753',
+  $munkitools_version             = '2.7.1.2764',
   $apple_software_updates_only    = false,
   $client_cert_path               = "${::ssldir}/certs/${::certname}.pem",
   $client_identifier              = undef,
