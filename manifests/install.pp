@@ -18,10 +18,9 @@ class munki::install {
   $broken_days_ago = $today - (86400 * $days_before_broken)
 
   if $days_before_broken != 0 {
-    if ($facts['munki_last_run_unix'] != undef and ($facts['munki_last_run_unix'] < $broken_days_ago or $facts['munki_dir_exists'] == false)) {
+    if ($facts['munki_last_run_unix'] != undef and ($facts['munki_last_run_unix'] < $broken_days_ago or $facts['munki_dir_exists'] == false or $facts['munki_version'] == "Munki not installed")) {
       # Munki has run before, but it's not run for ages
-      notify {"Broken days ago ${broken_days_ago}": }
-      notify {"Today ${today}": }
+
       # Bin the Puppet receipt
       exec { "/bin/rm -f /var/db/.puppet_pkgdmg_installed_munkitools-${munkitools_version}":
       }
@@ -49,8 +48,12 @@ class munki::install {
     }
 
   }
-  
-  if $facts['munki_version'] == "Munki not installed" or $facts['munki_dir_exists'] == false {
+
+#   if versioncmp('2.6-1', '2.4.5') > 0 {
+#     notice('2.6-1 is > than 2.4.5')
+# }
+
+  if (versioncmp($facts['installed_packages']['com.googlecode.munki.core']['version'], $munkitools_version) == -1) {
     file { "${::puppet_vardir}/packages/munkitools.pkg":
       ensure  => file,
       source  => "puppet:///modules/munki/munkitools-${munkitools_version}.pkg",
