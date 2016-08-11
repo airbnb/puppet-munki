@@ -49,7 +49,7 @@ class munki::install {
 
   }
 
-  if munki_install_required($munkitools_version) {
+  if macos_package_installed('com.googlecode.munki.core', $munkitools_version) == false {
     file { "${::puppet_vardir}/packages/munkitools.pkg":
       ensure  => file,
       source  => "puppet:///modules/munki/munkitools-${munkitools_version}.pkg",
