@@ -49,11 +49,7 @@ class munki::install {
 
   }
 
-#   if versioncmp('2.6-1', '2.4.5') > 0 {
-#     notice('2.6-1 is > than 2.4.5')
-# }
-
-  if (versioncmp($facts['installed_packages']['com.googlecode.munki.core']['version'], $munkitools_version) == -1) {
+  if (empty($facts['installed_packages']['com.googlecode.munki.core']['version'])) or (versioncmp($facts['installed_packages']['com.googlecode.munki.core']['version'], $munkitools_version) == -1) {
     file { "${::puppet_vardir}/packages/munkitools.pkg":
       ensure  => file,
       source  => "puppet:///modules/munki/munkitools-${munkitools_version}.pkg",
