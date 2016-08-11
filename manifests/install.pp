@@ -49,7 +49,7 @@ class munki::install {
 
   }
 
-  if (empty($facts['installed_packages']['com.googlecode.munki.core']['version'])) or (versioncmp($facts['installed_packages']['com.googlecode.munki.core']['version'], $munkitools_version) == -1) {
+  if munki_install_required($munkitools_version) {
     file { "${::puppet_vardir}/packages/munkitools.pkg":
       ensure  => file,
       source  => "puppet:///modules/munki/munkitools-${munkitools_version}.pkg",
