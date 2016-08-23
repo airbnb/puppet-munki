@@ -13,7 +13,7 @@ class munki (
   $logging_level                  = 1,
   $msu_log_enabled                = true,
   $software_repo_ca_cert          = "${::ssldir}/certs/ca.pem",
-  $software_repo_url              = 'https://***REMOVED***',
+  $software_repo_url              = 'https://munki',
   $software_update_server_url     = undef,
   $suppress_user_notification     = false,
   $use_client_cert                = false,
