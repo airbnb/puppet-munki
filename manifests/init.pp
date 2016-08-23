@@ -18,6 +18,7 @@ class munki (
   $suppress_user_notification     = false,
   $use_client_cert                = false,
   $days_before_broken             = 60,
+  $additional_http_headers        = [],
 ){
 
   class { '::munki::config': } ->

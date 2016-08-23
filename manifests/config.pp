@@ -13,7 +13,7 @@ class munki::config {
   $software_update_server_url     = $munki::software_update_server_url
   $suppress_user_notification     = $munki::suppress_user_notification
   $use_client_cert                = $munki::use_client_cert
-  $additionalhttpheaders          = $munki::additionalhttpheaders
+  $additional_http_headers        = $munki::additional_http_headers
 
 
   $profile = {
@@ -24,9 +24,7 @@ class munki::config {
                     'Forced' => [
                         {
                             'mcx_preference_settings' => {
-                                      'AdditionalHttpHeaders' => [
-                                    $additionalhttpheaders
-                                ],
+                                      'AdditionalHttpHeaders' => $additional_http_headers,
                                    'AppleSoftwareUpdatesOnly' => $apple_software_updates_only,
                                       'ClientCertificatePath' => $client_cert_path,
                                               'ClientKeyPath' => $client_key_path,
