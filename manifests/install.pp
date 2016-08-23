@@ -3,6 +3,7 @@ class munki::install {
 
   $munkitools_version = $munki::munkitools_version
   $days_before_broken = $munki::days_before_broken
+  $package_source     = $munki::package_source
 
   validate_integer($days_before_broken)
 
@@ -55,7 +56,7 @@ class munki::install {
    {
     file { "${::puppet_vardir}/packages/munkitools.pkg":
       ensure  => file,
-      source  => "puppet:///modules/munki/munkitools-${munkitools_version}.pkg",
+      source  => $package_source,
       mode    => '0644',
       backup  => false,
       require => File["${::puppet_vardir}/packages"],

@@ -19,6 +19,7 @@ class munki (
   $use_client_cert                = false,
   $days_before_broken             = 60,
   $additional_http_headers        = [],
+  $package_source                 = "puppet:///modules/bigfiles/munki/munkitools-${munkitools_version}.pkg",
 ){
 
   class { '::munki::config': } ->
