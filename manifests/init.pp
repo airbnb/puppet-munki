@@ -1,6 +1,7 @@
 # Class: munki
 #
 # Installs and configures munki
+# you must specify your own munki repo URL; please don't use http://munki and instead use a https URL.
 
 class munki (
   $munkitools_version             = '2.8.0.2810',
@@ -14,7 +15,7 @@ class munki (
   $log_to_syslog                  = true,
   $msu_log_enabled                = true,
   $software_repo_ca_cert          = "${::ssldir}/certs/ca.pem",
-  $software_repo_url              = 'https://munki',
+  $software_repo_url              = '',
   $software_update_server_url     = undef,
   $suppress_user_notification     = false,
   $use_client_cert                = false,
