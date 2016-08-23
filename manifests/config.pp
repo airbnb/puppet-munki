@@ -7,6 +7,7 @@ class munki::config {
   $days_between_notifications     = $munki::days_between_notifications
   $install_apple_software_updates = $munki::install_apple_software_updates
   $logging_level                  = $munki::logging_level
+  $log_to_syslog                  = $munki::log_to_syslog
   $msu_log_enabled                = $munki::msu_log_enabled
   $software_repo_ca_cert          = $munki::software_repo_ca_cert
   $software_repo_url              = $munki::software_repo_url
@@ -31,6 +32,7 @@ class munki::config {
                                    'DaysBetweenNotifications' => $days_between_notifications,
                                 'InstallAppleSoftwareUpdates' => $install_apple_software_updates,
                                                'LoggingLevel' => $logging_level,
+                                                'LogToSyslog' => $log_to_syslog,
                                               'MSULogEnabled' => $msu_log_enabled,
                                   'SoftwareRepoCACertificate' => $software_repo_ca_cert,
                                             'SoftwareRepoURL' => $software_repo_url,

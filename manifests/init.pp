@@ -11,6 +11,7 @@ class munki (
   $days_between_notifications     = 1,
   $install_apple_software_updates = true,
   $logging_level                  = 1,
+  $log_to_syslog                  = true,
   $msu_log_enabled                = true,
   $software_repo_ca_cert          = "${::ssldir}/certs/ca.pem",
   $software_repo_url              = 'http://munki',
