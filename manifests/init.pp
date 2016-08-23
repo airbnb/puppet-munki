@@ -3,7 +3,7 @@
 # Installs and configures munki
 
 class munki (
-  $munkitools_version             = '2.8.0.2810',
+  $munkitools_version             = '2.7.1.2764',
   $apple_software_updates_only    = false,
   $client_cert_path               = "${::ssldir}/certs/${::certname}.pem",
   $client_identifier              = undef,
@@ -13,13 +13,11 @@ class munki (
   $logging_level                  = 1,
   $msu_log_enabled                = true,
   $software_repo_ca_cert          = "${::ssldir}/certs/ca.pem",
-  $software_repo_url              = 'http://munki',
-  $additionalhttpheaders          = [],
+  $software_repo_url              = 'https://***REMOVED***',
   $software_update_server_url     = undef,
   $suppress_user_notification     = false,
   $use_client_cert                = false,
   $days_before_broken             = 60,
-  $pkg_url                         = "https://github.com/munki/munki/releases/download/v2.8.0/munkitools-2.8.0.2810.pkg",
 ){
 
   class { '::munki::config': } ->
