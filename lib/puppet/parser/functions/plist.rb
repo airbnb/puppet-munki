@@ -1,6 +1,6 @@
 # ruby hash
 
-require 'puppet/util/plist'
+require 'puppet/util/plist' if Puppet.features.cfpropertylist?
 
 module Puppet::Parser::Functions
   newfunction(:plist, type: :rvalue) do |args|

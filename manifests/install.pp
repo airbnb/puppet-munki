@@ -60,6 +60,7 @@ class munki::install {
       backup  => false,
       require => File["${::puppet_vardir}/packages"],
     }
+    
     package { "munkitools-${munkitools_version}":
       ensure   => installed,
       provider => pkgdmg,
