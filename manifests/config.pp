@@ -14,6 +14,7 @@ class munki::config {
   $suppress_user_notification     = $munki::suppress_user_notification
   $use_client_cert                = $munki::use_client_cert
   $additional_http_headers        = $munki::additional_http_headers
+  $payload_organization           = $munki::payload_organization
 
 
   $profile = {
@@ -51,7 +52,7 @@ class munki::config {
           'PayloadDescription' => "Included custom settings:\nManagedInstalls",
           'PayloadDisplayName' => 'Settings for Munki',
            'PayloadIdentifier' => 'ManagedInstalls',
-         'PayloadOrganization' => '',
+         'PayloadOrganization' => $payload_organization,
     'PayloadRemovalDisallowed' => true,
                 'PayloadScope' => 'System',
                  'PayloadType' => 'Configuration',
