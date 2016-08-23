@@ -24,9 +24,7 @@ class munki::config {
                     'Forced' => [
                         {
                             'mcx_preference_settings' => {
-                                      'AdditionalHttpHeaders' => [
-                                    $additionalhttpheaders
-                                ],
+                                      'AdditionalHttpHeaders' => $additionalhttpheaders,
                                    'AppleSoftwareUpdatesOnly' => $apple_software_updates_only,
                                       'ClientCertificatePath' => $client_cert_path,
                                               'ClientKeyPath' => $client_key_path,
