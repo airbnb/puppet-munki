@@ -7,13 +7,15 @@ class munki::config {
   $days_between_notifications     = $munki::days_between_notifications
   $install_apple_software_updates = $munki::install_apple_software_updates
   $logging_level                  = $munki::logging_level
+  $log_to_syslog                  = $munki::log_to_syslog
   $msu_log_enabled                = $munki::msu_log_enabled
   $software_repo_ca_cert          = $munki::software_repo_ca_cert
   $software_repo_url              = $munki::software_repo_url
   $software_update_server_url     = $munki::software_update_server_url
   $suppress_user_notification     = $munki::suppress_user_notification
   $use_client_cert                = $munki::use_client_cert
-  $additionalhttpheaders          = $munki::additionalhttpheaders
+  $additional_http_headers        = $munki::additional_http_headers
+  $payload_organization           = $munki::payload_organization
 
 
   $profile = {
@@ -24,13 +26,14 @@ class munki::config {
                     'Forced' => [
                         {
                             'mcx_preference_settings' => {
-                                      'AdditionalHttpHeaders' => $additionalhttpheaders,
+                                      'AdditionalHttpHeaders' => $additional_http_headers,
                                    'AppleSoftwareUpdatesOnly' => $apple_software_updates_only,
                                       'ClientCertificatePath' => $client_cert_path,
                                               'ClientKeyPath' => $client_key_path,
                                    'DaysBetweenNotifications' => $days_between_notifications,
                                 'InstallAppleSoftwareUpdates' => $install_apple_software_updates,
                                                'LoggingLevel' => $logging_level,
+                                                'LogToSyslog' => $log_to_syslog,
                                               'MSULogEnabled' => $msu_log_enabled,
                                   'SoftwareRepoCACertificate' => $software_repo_ca_cert,
                                             'SoftwareRepoURL' => $software_repo_url,
@@ -51,7 +54,7 @@ class munki::config {
           'PayloadDescription' => "Included custom settings:\nManagedInstalls",
           'PayloadDisplayName' => 'Settings for Munki',
            'PayloadIdentifier' => 'ManagedInstalls',
-         'PayloadOrganization' => '',
+         'PayloadOrganization' => $payload_organization,
     'PayloadRemovalDisallowed' => true,
                 'PayloadScope' => 'System',
                  'PayloadType' => 'Configuration',

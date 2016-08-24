@@ -3,7 +3,7 @@ class munki::install {
 
   $munkitools_version = $munki::munkitools_version
   $days_before_broken = $munki::days_before_broken
-  $pkg_url            = $munki::pkg_url
+  $package_source     = $munki::package_source
 
   validate_integer($days_before_broken)
 
@@ -13,13 +13,13 @@ class munki::install {
     }
   }
 
-  $today = strftime("%s")
+  $today = strftime('%s')
 
   # $today - (86400 seconds in a day * $days_before_broken)
   $broken_days_ago = $today - (86400 * $days_before_broken)
 
   if $days_before_broken != 0 {
-    if ($facts['munki_last_run_unix'] != undef and ($facts['munki_last_run_unix'] < $broken_days_ago or $facts['munki_dir_exists'] == false or $facts['munki_version'] == "Munki not installed")) {
+    if ($facts['munki_last_run_unix'] != undef and ($facts['munki_last_run_unix'] < $broken_days_ago or $facts['munki_dir_exists'] == false or $facts['munki_version'] == 'Munki not installed')) {
       # Munki has run before, but it's not run for ages
 
       # Bin the Puppet receipt
@@ -52,13 +52,21 @@ class munki::install {
 
   if macos_package_installed('com.googlecode.munki.core', $munkitools_version) == false or
   $facts['munki_dir_exists'] == false or
-  $facts['munki_version'] == "Munki not installed"
+  $facts['munki_version'] == 'Munki not installed'
    {
-
+    file { "${::puppet_vardir}/packages/munkitools.pkg":
+      ensure  => file,
+      source  => $package_source,
+      mode    => '0644',
+      backup  => false,
+      require => File["${::puppet_vardir}/packages"],
+    }
+    
     package { "munkitools-${munkitools_version}":
       ensure   => installed,
       provider => pkgdmg,
-      source   => $pkg_url,
+      source   => "${::puppet_vardir}/packages/munkitools.pkg",
+      require  => File["${::puppet_vardir}/packages/munkitools.pkg"],
     }
   }
 
