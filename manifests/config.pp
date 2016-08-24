@@ -16,6 +16,7 @@ class munki::config {
   $use_client_cert                = $munki::use_client_cert
   $additional_http_headers        = $munki::additional_http_headers
   $payload_organization           = $munki::payload_organization
+  $show_removal_detail            = $munki::show_removal_detail
 
 
   $profile = {
@@ -38,7 +39,8 @@ class munki::config {
                                   'SoftwareRepoCACertificate' => $software_repo_ca_cert,
                                             'SoftwareRepoURL' => $software_repo_url,
                                    'SuppressUserNotification' => $suppress_user_notification,
-                                       'UseClientCertificate' => $use_client_cert
+                                       'UseClientCertificate' => $use_client_cert,
+                                       'ShowRemovalDetail' => $show_removal_detail
                             }
                         }
                     ]
