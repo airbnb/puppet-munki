@@ -20,48 +20,48 @@ class munki::config {
 
 
   $profile = {
-              'PayloadContent' => [
-        {
-               'PayloadContent' => {
-                'ManagedInstalls' => {
-                    'Forced' => [
-                        {
-                            'mcx_preference_settings' => {
-                                      'AdditionalHttpHeaders' => $additional_http_headers,
-                                   'AppleSoftwareUpdatesOnly' => $apple_software_updates_only,
-                                      'ClientCertificatePath' => $client_cert_path,
-                                              'ClientKeyPath' => $client_key_path,
-                                   'DaysBetweenNotifications' => $days_between_notifications,
-                                'InstallAppleSoftwareUpdates' => $install_apple_software_updates,
-                                               'LoggingLevel' => $logging_level,
-                                                'LogToSyslog' => $log_to_syslog,
-                                              'MSULogEnabled' => $msu_log_enabled,
-                                  'SoftwareRepoCACertificate' => $software_repo_ca_cert,
-                                            'SoftwareRepoURL' => $software_repo_url,
-                                   'SuppressUserNotification' => $suppress_user_notification,
-                                       'UseClientCertificate' => $use_client_cert,
-                                       'ShowRemovalDetail' => $show_removal_detail
-                            }
-                        }
-                    ]
+    'PayloadContent' => [
+      {
+        'PayloadContent' => {
+          'ManagedInstalls' => {
+            'Forced' => [
+              {
+                'mcx_preference_settings' => {
+                  'AdditionalHttpHeaders' => $additional_http_headers,
+                  'AppleSoftwareUpdatesOnly' => $apple_software_updates_only,
+                  'ClientCertificatePath' => $client_cert_path,
+                  'ClientKeyPath' => $client_key_path,
+                  'DaysBetweenNotifications' => $days_between_notifications,
+                  'InstallAppleSoftwareUpdates' => $install_apple_software_updates,
+                  'LoggingLevel' => $logging_level,
+                  'LogToSyslog' => $log_to_syslog,
+                  'MSULogEnabled' => $msu_log_enabled,
+                  'SoftwareRepoCACertificate' => $software_repo_ca_cert,
+                  'SoftwareRepoURL' => $software_repo_url,
+                  'SuppressUserNotification' => $suppress_user_notification,
+                  'UseClientCertificate' => $use_client_cert,
+                  'ShowRemovalDetail' => $show_removal_detail
                 }
-            },
-               'PayloadEnabled' => true,
-            'PayloadIdentifier' => 'MCXToProfile.1dc15df4-d4c4-4b3a-b507-dd8f3b44f093.alacarte.customsettings.2beb4aeb-861b-4000-8c3a-d05117bf5ba7',
-                  'PayloadType' => 'com.apple.ManagedClient.preferences',
-                  'PayloadUUID' => '2beb4aeb-861b-4000-8c3a-d05117bf5ba7',
-               'PayloadVersion' => 1
-        }
+              }
+            ]
+          }
+        },
+        'PayloadEnabled' => true,
+        'PayloadIdentifier' => 'MCXToProfile.1dc15df4-d4c4-4b3a-b507-dd8f3b44f093.alacarte.customsettings.2beb4aeb-861b-4000-8c3a-d05117bf5ba7',
+        'PayloadType' => 'com.apple.ManagedClient.preferences',
+        'PayloadUUID' => '2beb4aeb-861b-4000-8c3a-d05117bf5ba7',
+        'PayloadVersion' => 1
+      }
     ],
-          'PayloadDescription' => "Included custom settings:\nManagedInstalls",
-          'PayloadDisplayName' => 'Settings for Munki',
-           'PayloadIdentifier' => 'ManagedInstalls',
-         'PayloadOrganization' => $payload_organization,
+    'PayloadDescription' => "Included custom settings:\nManagedInstalls",
+    'PayloadDisplayName' => 'Settings for Munki',
+    'PayloadIdentifier' => 'ManagedInstalls',
+    'PayloadOrganization' => $payload_organization,
     'PayloadRemovalDisallowed' => true,
-                'PayloadScope' => 'System',
-                 'PayloadType' => 'Configuration',
-                 'PayloadUUID' => '1dc15df4-d4c4-4b3a-b507-dd8f3b44f093',
-              'PayloadVersion' => 1
+    'PayloadScope' => 'System',
+    'PayloadType' => 'Configuration',
+    'PayloadUUID' => '1dc15df4-d4c4-4b3a-b507-dd8f3b44f093',
+    'PayloadVersion' => 1
   }
 
   mac_profiles_handler::manage { 'ManagedInstalls':

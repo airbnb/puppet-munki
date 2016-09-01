@@ -7,8 +7,8 @@ class munki::install {
 
   validate_integer($days_before_broken)
 
-  if ! defined(File["${::puppet_vardir}/packages"]) {
-    file { "${::puppet_vardir}/packages":
+  if ! defined(File["${facts['puppet_vardir']}/packages"]) {
+    file { "${facts['puppet_vardir']}/packages":
       ensure => directory,
     }
   }
@@ -44,7 +44,7 @@ class munki::install {
       }
 
       # Bin the cached copy of the profile so it gets reinstalled
-      exec {"/bin/rm -f ${::puppet_vardir}/mobileconfigs/ManagedInstalls":
+      exec {"/bin/rm -f ${facts['puppet_vardir']}/mobileconfigs/ManagedInstalls":
       }
     }
 
@@ -53,20 +53,20 @@ class munki::install {
   if macos_package_installed('com.googlecode.munki.core', $munkitools_version) == false or
   $facts['munki_dir_exists'] == false or
   $facts['munki_version'] == 'Munki not installed'
-   {
-    file { "${::puppet_vardir}/packages/munkitools.pkg":
+  {
+    file { "${facts['puppet_vardir']}/packages/munkitools.pkg":
       ensure  => file,
       source  => $package_source,
       mode    => '0644',
       backup  => false,
-      require => File["${::puppet_vardir}/packages"],
+      require => File["${facts['puppet_vardir']}/packages"],
     }
-    
+
     package { "munkitools-${munkitools_version}":
       ensure   => installed,
       provider => pkgdmg,
-      source   => "${::puppet_vardir}/packages/munkitools.pkg",
-      require  => File["${::puppet_vardir}/packages/munkitools.pkg"],
+      source   => "${facts['puppet_vardir']}/packages/munkitools.pkg",
+      require  => File["${facts['puppet_vardir']}/packages/munkitools.pkg"],
     }
   }
 
