@@ -23,14 +23,7 @@ Returns true if Munki thinks the item is installed.
 
     if munki_managed_installs.include? args[0]
       # If a version has been specified, make sure it's that version installed
-      if args.size == 2
-        if install['installed'] == args[1]
-          return true
-        end
-      else
-        return true
-      end
-      # return true
+      return munki_managed_installs[args[0]]['installed']
     end
 
     # If we're here, it's not installed, return false
