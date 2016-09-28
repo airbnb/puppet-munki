@@ -6,6 +6,7 @@ class munki::config {
   $client_key_path                = $munki::client_key_path
   $days_between_notifications     = $munki::days_between_notifications
   $install_apple_software_updates = $munki::install_apple_software_updates
+  $unattended_apple_updates       = $munki::unattended_apple_updates
   $logging_level                  = $munki::logging_level
   $log_to_syslog                  = $munki::log_to_syslog
   $msu_log_enabled                = $munki::msu_log_enabled
@@ -33,6 +34,7 @@ class munki::config {
                   'ClientKeyPath' => $client_key_path,
                   'DaysBetweenNotifications' => $days_between_notifications,
                   'InstallAppleSoftwareUpdates' => $install_apple_software_updates,
+                  'UnattendedAppleUpdates' => $unattended_apple_updates,
                   'LoggingLevel' => $logging_level,
                   'LogToSyslog' => $log_to_syslog,
                   'MSULogEnabled' => $msu_log_enabled,

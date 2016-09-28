@@ -11,6 +11,7 @@ class munki (
   $client_key_path                = "${facts['ssldir']}/private_keys/${facts['certname']}.pem",
   $days_between_notifications     = 1,
   $install_apple_software_updates = true,
+  $unattended_apple_updates       = false,
   $logging_level                  = 1,
   $log_to_syslog                  = false,
   $msu_log_enabled                = false,
