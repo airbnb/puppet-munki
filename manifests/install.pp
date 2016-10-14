@@ -43,9 +43,6 @@ class munki::install {
         returns => [0, 1]
       }
 
-      # Bin the cached copy of the profile so it gets reinstalled
-      exec {"/bin/rm -f ${facts['puppet_vardir']}/mobileconfigs/ManagedInstalls":
-      }
     }
 
   }
