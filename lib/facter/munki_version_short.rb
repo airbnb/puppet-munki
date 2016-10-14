@@ -2,12 +2,12 @@
 Facter.add(:munki_version_short) do
   confine kernel: 'Darwin'
   setcode do
-    if File.exist?('/usr/local/munki/managedsoftwareupdate')
-      fullver = Facter::Util::Resolution.exec('/usr/local/munki/managedsoftwareupdate --version')
-      splitsting = fullver.split('.')
-      splitsting[0] + '.' + splitsting[1] + '.' + splitsting[2]
-    else
+    munki_version = Facter.value(:munki_version)
+    if munki_version == 'Munki not installed'
       'Munki not installed'
+    else
+      splitsting = munki_version.split('.')
+      splitsting[0] + '.' + splitsting[1] + '.' + splitsting[2]
     end
   end
 end

@@ -17,7 +17,7 @@ Facter.add(:munki_managed_installs) do
                                 install['installed_version']
                               else
                                 'unknown'
-                                end
+                              end
           output[install['name']] = {
             'display_name' => install['display_name'],
             'name'              => install['name'],

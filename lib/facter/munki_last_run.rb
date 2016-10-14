@@ -1,5 +1,4 @@
 # munki_last_run.rb
-require 'puppet'
 require 'puppet/util/plist' if Puppet.features.cfpropertylist?
 
 # Get the plist dynamically eventually
@@ -13,6 +12,6 @@ Facter.add(:munki_last_run) do
       last_run = plist['StartTime']
     else
       'never'
-  end
+    end
   end
 end

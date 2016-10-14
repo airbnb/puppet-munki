@@ -1,15 +1,9 @@
 #
 # munki_item_installed
 #
-# require 'puppet/util/package'
-require 'puppet/util/plist'
 
 module Puppet::Parser::Functions
-  newfunction(:munki_item_installed, type: :rvalue, doc: <<-EOS
-Returns true if Munki thinks the item is installed.
-    EOS
-             ) do |args|
-
+  newfunction(:munki_item_installed, type: :rvalue, doc: 'Returns true if Munki thinks the item is installed.') do |args|
     raise(Puppet::ParseError, 'munki_item_installed(): ' \
     "Wrong number of arguments given (#{args.size} for 1)") if args.size != 1
 
