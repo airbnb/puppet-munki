@@ -6,8 +6,7 @@ Facter.add(:munki_version_short) do
     if munki_version == 'Munki not installed'
       'Munki not installed'
     else
-      splitsting = munki_version.split('.')
-      splitsting[0] + '.' + splitsting[1] + '.' + splitsting[2]
+      munki_version[/^\d+\W\d+\W\d+/]
     end
   end
 end
