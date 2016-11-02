@@ -19,7 +19,13 @@ class munki::install {
   $broken_days_ago = $today - (86400 * $days_before_broken)
 
   if $days_before_broken != 0 {
-    if ($facts['munki_last_run_unix'] != undef and ($facts['munki_last_run_unix'] < $broken_days_ago or $facts['munki_dir_exists'] == false or $facts['munki_version'] == 'Munki not installed')) or versioncmp($facts['munki_version'], $munkitools_version) < 0{
+    if (($facts['munki_last_run_unix'] != undef and
+        ($facts['munki_last_run_unix'] < $broken_days_ago or
+        $facts['munki_dir_exists'] == false
+        or $facts['munki_version'] == 'Munki not installed')
+      ) or
+      versioncmp($facts['munki_version'], $munkitools_version) < 0 ) and
+      $facts['munki_running'] == false {
       # Munki has run before, but it's not run for ages
 
       # Bin the Puppet receipt
@@ -52,10 +58,11 @@ class munki::install {
     notify{"${facts['munki_version']} is less than ${munkitools_version}": }
   }
 
-  if macos_package_installed('com.googlecode.munki.core', $munkitools_version) == false or
+  if (macos_package_installed('com.googlecode.munki.core', $munkitools_version) == false or
   $facts['munki_dir_exists'] == false or
   $facts['munki_version'] == 'Munki not installed' or
-  versioncmp($facts['munki_version'], $munkitools_version) < 0
+  versioncmp($facts['munki_version'], $munkitools_version) < 0) and
+  $facts['munki_running'] == false
   {
     file { "${facts['puppet_vardir']}/packages/munkitools.pkg":
       ensure  => file,
