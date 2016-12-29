@@ -5,7 +5,7 @@ class munki::install {
   $days_before_broken = $munki::days_before_broken
   $package_source     = $munki::package_source
 
-  validate_integer($days_before_broken)
+  # validate_integer($days_before_broken)
 
   if ! defined(File["${facts['puppet_vardir']}/packages"]) {
     file { "${facts['puppet_vardir']}/packages":
