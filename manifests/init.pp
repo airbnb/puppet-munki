@@ -25,11 +25,13 @@ class munki (
   Array $additional_http_headers          = [],
   String $payload_organization            = '',
   String $package_source                  = "puppet:///modules/bigfiles/munki/munkitools-${munkitools_version}.pkg",
+  Boolean $auto_run_after_install         = true,
 ){
 
   class { '::munki::config': } ->
   class { '::munki::install': } ->
   class { '::munki::service': } ->
+  class { '::munki::auto_run': } ->
   Class['munki']
 
 }
