@@ -32,6 +32,7 @@ class munki::config {
                   'AppleSoftwareUpdatesOnly' => $apple_software_updates_only,
                   'ClientCertificatePath' => $client_cert_path,
                   'ClientKeyPath' => $client_key_path,
+                  'ClientIdentifier' => $client_identifier,
                   'DaysBetweenNotifications' => $days_between_notifications,
                   'InstallAppleSoftwareUpdates' => $install_apple_software_updates,
                   'UnattendedAppleUpdates' => $unattended_apple_updates,
