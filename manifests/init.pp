@@ -7,7 +7,7 @@ class munki (
   String $munkitools_version              = '2.8.0.2810',
   Boolean $apple_software_updates_only    = false,
   String $client_cert_path                = "${facts['ssldir']}/certs/${facts['certname']}.pem",
-  Any $client_identifier                  = undef,
+  String $client_identifier               = '',
   String $client_key_path                 = "${facts['ssldir']}/private_keys/${facts['certname']}.pem",
   Integer $days_between_notifications     = 1,
   Boolean $install_apple_software_updates = true,
