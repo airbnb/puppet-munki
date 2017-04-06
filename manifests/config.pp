@@ -49,7 +49,7 @@ class munki::config {
           }
         },
         'PayloadEnabled' => true,
-        'PayloadIdentifier' => 'MCXToProfile.1dc15df4-d4c4-4b3a-b507-dd8f3b44f093.alacarte.customsettings.2beb4aeb-861b-4000-8c3a-d05117bf5ba7',
+        'PayloadIdentifier' => 'MCXToProfile.1dc15df4-d4c4-4b3a-b507-dd8f3b44f093.alacarte.customsettings.2beb4aeb-861b-4000-8c3a-d05117bf5ba7', # lint:ignore:140chars
         'PayloadType' => 'com.apple.ManagedClient.preferences',
         'PayloadUUID' => '2beb4aeb-861b-4000-8c3a-d05117bf5ba7',
         'PayloadVersion' => 1

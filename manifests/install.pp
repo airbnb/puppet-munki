@@ -20,9 +20,10 @@ class munki::install {
 
   if $facts['munki_last_run_unix'] != undef and $facts['munki_last_run_unix'] < $broken_days_ago {
     $force_install = true
-  } elsif (macos_package_installed('com.googlecode.munki.core', $munkitools_version) == false or 
-  $facts['munki_dir_exists'] == false or
-  $facts['munki_version'] == 'Munki not installed' or
+  }
+  elsif (macos_package_installed('com.googlecode.munki.core', $munkitools_version) == false or
+    $facts['munki_dir_exists'] == false or
+    $facts['munki_version'] == 'Munki not installed' or
   versioncmp($facts['munki_version'], $munkitools_version) < 0) and
   $facts['munki_running'] == false {
     $force_install = true
@@ -34,7 +35,7 @@ class munki::install {
     source        => $package_source,
     version       => $munkitools_version,
     receipt       => 'com.googlecode.munki.core',
-    installs      => ['/Applications/Managed Software Center.app/Contents/MacOS/Managed Software Center', '/usr/local/munki/managedsoftwareupdate'],
+    installs      => ['/Applications/Managed Software Center.app/Contents/MacOS/Managed Software Center', '/usr/local/munki/managedsoftwareupdate'], # lint:ignore:140chars
     force_install => $force_install
   }
 

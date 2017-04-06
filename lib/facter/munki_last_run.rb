@@ -10,6 +10,7 @@ Facter.add(:munki_last_run) do
     if File.exist?(report_plist)
       plist = Puppet::Util::Plist.read_plist_file(report_plist)
       last_run = plist['StartTime']
+      last_run
     else
       'never'
     end

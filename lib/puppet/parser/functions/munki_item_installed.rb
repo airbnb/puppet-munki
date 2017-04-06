@@ -2,10 +2,15 @@
 # munki_item_installed
 #
 
+# Meaty meat meat
 module Puppet::Parser::Functions
+  # rubocop:disable LineLength
   newfunction(:munki_item_installed, type: :rvalue, doc: 'Returns true if Munki thinks the item is installed.') do |args|
-    raise(Puppet::ParseError, 'munki_item_installed(): ' \
-    "Wrong number of arguments given (#{args.size} for 1)") if args.size != 1
+    # rubocop:enable LineLength
+    if args.size != 1
+      raise(Puppet::ParseError, 'munki_item_installed(): ' \
+      "Wrong number of arguments given (#{args.size} for 1)")
+    end
 
     munki_managed_installs = lookupvar('munki_managed_installs')
     # Nothing in here, return false
