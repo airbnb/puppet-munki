@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 source 'https://rubygems.org'
 
-gem 'kitchen-puppet'
-gem 'kitchen-vagrant'
 gem 'librarian-puppet'
 gem 'puppet-lint'
 gem 'puppet-lint-absolute_template_path'
@@ -12,4 +10,3 @@ gem 'puppet-lint-top_scope_facts-check'
 gem 'puppet-lint-unquoted_string-check'
 gem 'puppet-lint-variable_contains_upcase'
 gem 'rubocop'
-gem 'test-kitchen'
