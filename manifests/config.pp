@@ -18,7 +18,8 @@ class munki::config {
   $additional_http_headers        = $munki::additional_http_headers
   $payload_organization           = $munki::payload_organization
   $show_removal_detail            = $munki::show_removal_detail
-
+  $recovery_key_file              = $munki::recovery_key_file
+  $perform_auth_restarts          = $munki::perform_auth_restarts
 
   $profile = {
     'PayloadContent' => [
@@ -43,7 +44,9 @@ class munki::config {
                   'SoftwareRepoURL' => $software_repo_url,
                   'SuppressUserNotification' => $suppress_user_notification,
                   'UseClientCertificate' => $use_client_cert,
-                  'ShowRemovalDetail' => $show_removal_detail
+                  'ShowRemovalDetail' => $show_removal_detail,
+                  'PerformAuthRestarts' => $perform_auth_restarts,
+                  'RecoveryKeyFile' => $recovery_key_file
                 }
               }
             ]

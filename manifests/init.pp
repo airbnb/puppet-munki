@@ -26,6 +26,8 @@ class munki (
   String $payload_organization            = '',
   String $package_source                  = "puppet:///modules/bigfiles/munki/munkitools-${munkitools_version}.pkg",
   Boolean $auto_run_after_install         = true,
+  Boolean $perform_auth_restarts          = false,
+  String $recovery_key_file               = '',
 ){
 
   class { '::munki::config': } ->
