@@ -36,7 +36,13 @@ class munki::install {
     version       => $munkitools_version,
     receipt       => 'com.googlecode.munki.core',
     installs      => ['/Applications/Managed Software Center.app/Contents/MacOS/Managed Software Center', '/usr/local/munki/managedsoftwareupdate'], # lint:ignore:140chars
-    force_install => $force_install
+    force_install => $force_install,
+    notify        => [
+      Exec['munki_reload_launchagents'],
+      Service['com.googlecode.munki.managedsoftwareupdate-check'],
+      Service['com.googlecode.munki.managedsoftwareupdate-install'],
+      Service['com.googlecode.munki.managedsoftwareupdate-manualcheck']
+    ]
   }
 
   # Make sure everything is owned by root
