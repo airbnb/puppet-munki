@@ -42,8 +42,19 @@ class munki::service {
     }
   } else {
     exec { 'munki_reload_launchagents':
-      command => '/bin/echo',
-      # path => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+      command     => '# get console UID
+  consoleuser=`/usr/bin/stat -f "%Su" /dev/console | /usr/bin/xargs /usr/bin/id -u`
+
+  /bin/launchctl bootout gui/$consoleuser /Library/LaunchAgents/com.googlecode.munki.ManagedSoftwareCenter.plist
+  /bin/launchctl bootout gui/$consoleuser /Library/LaunchAgents/com.googlecode.munki.MunkiStatus.plist
+  /bin/launchctl bootout gui/$consoleuser /Library/LaunchAgents/com.googlecode.munki.managedsoftwareupdate-loginwindow.plist
+  /bin/launchctl bootstrap gui/$consoleuser /Library/LaunchAgents/com.googlecode.munki.ManagedSoftwareCenter.plist
+  /bin/launchctl bootstrap gui/$consoleuser /Library/LaunchAgents/com.googlecode.munki.MunkiStatus.plist
+  /bin/launchctl bootstrap gui/$consoleuser /Library/LaunchAgents/com.googlecode.munki.managedsoftwareupdate-loginwindow.plist
+
+  exit 0',
+      path        => '/bin:/sbin:/usr/bin:/usr/sbin',
+      provider    => 'shell',
       refreshonly => true,
     }
   }
