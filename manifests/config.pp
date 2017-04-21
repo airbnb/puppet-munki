@@ -20,6 +20,7 @@ class munki::config {
   $show_removal_detail            = $munki::show_removal_detail
   $recovery_key_file              = $munki::recovery_key_file
   $perform_auth_restarts          = $munki::perform_auth_restarts
+  $use_notification_center_days   = $munki::use_notification_center_days
 
   $profile = {
     'PayloadContent' => [
@@ -46,7 +47,8 @@ class munki::config {
                   'UseClientCertificate' => $use_client_cert,
                   'ShowRemovalDetail' => $show_removal_detail,
                   'PerformAuthRestarts' => $perform_auth_restarts,
-                  'RecoveryKeyFile' => $recovery_key_file
+                  'RecoveryKeyFile' => $recovery_key_file,
+                  'UseNotificationCenterDays' => $use_notification_center_days
                 }
               }
             ]

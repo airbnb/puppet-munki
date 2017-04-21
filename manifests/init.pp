@@ -28,6 +28,7 @@ class munki (
   Boolean $auto_run_after_install         = true,
   Boolean $perform_auth_restarts          = false,
   String $recovery_key_file               = '',
+  Integer $use_notification_center_days   = 3,
 ){
 
   class { '::munki::config': } ->
