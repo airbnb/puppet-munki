@@ -27,6 +27,16 @@ class munki::install {
   versioncmp($facts['munki_version'], $munkitools_version) < 0) and
   $facts['munki_running'] == false {
     $force_install = true
+    exec {'forget_munki_pkgs':
+      command => '/bin/rm -rf /usr/local/munki/munkilib
+      /usr/sbin/pkgutil --forget com.googlecode.munki.admin
+      /usr/sbin/pkgutil --forget com.googlecode.munki.app
+      /usr/sbin/pkgutil --forget com.googlecode.munki.core
+      /usr/sbin/pkgutil --forget com.googlecode.munki.launchd
+      /usr/sbin/pkgutil --forget com.googlecode.munki.app_usage
+      exit 0',
+      before  => Apple_package['munkitools']
+    }
   } else {
     $force_install = false
   }

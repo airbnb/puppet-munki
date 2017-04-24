@@ -29,8 +29,10 @@ class munki (
   Boolean $perform_auth_restarts          = false,
   String $recovery_key_file               = '',
   Integer $use_notification_center_days   = 3,
-){
-
+  Array $managed_installs                 = [],
+  Array $managed_uninstalls               = []
+)
+{
   class { '::munki::config': } ->
   class { '::munki::install': } ->
   class { '::munki::service': } ->
