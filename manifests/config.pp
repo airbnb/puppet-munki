@@ -50,13 +50,14 @@ class munki::config {
     # merge existing settings with 'LocalOnlyManifest' pref string
     $local_only_manifest = {'LocalOnlyManifest' => 'extra_packages'}
     $settings_to_write = merge($mcx_settings, $local_only_manifest)
-    class {'munki::local_only_manifest' :
-      managed_installs   => $managed_installs,
-      managed_uninstalls => $managed_uninstalls
-    }
   } else {
     # just copy the existing to $settings_to_write
     $settings_to_write = $mcx_settings
+  }
+
+  class {'munki::local_only_manifest' :
+    managed_installs   => $managed_installs,
+    managed_uninstalls => $managed_uninstalls
   }
 
   $profile = {

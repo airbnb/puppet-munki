@@ -16,13 +16,19 @@ class munki::local_only_manifest (
     }
   }
 
+  if $managed_installs == [] and $managed_uninstalls == [] {
+    $ensure = 'absent'
+  } else {
+    $ensure = 'present'
+  }
+
   $file_content = {
     'managed_installs'   => $managed_installs,
     'managed_uninstalls' => $managed_uninstalls
   }
 
   file {'/Library/Managed Installs/manifests/extra_packages':
-    ensure  => present,
+    ensure  => $ensure,
     mode    => '0644',
     owner   => 0,
     group   => 0,
