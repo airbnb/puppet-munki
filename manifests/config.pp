@@ -43,8 +43,8 @@ class munki::config {
     'RecoveryKeyFile' => $recovery_key_file,
     'UseNotificationCenterDays' => $use_notification_center_days
   }
-  $managed_installs = lookup('munki::managed_installs', Array, 'merge', [])
-  $managed_uninstalls = lookup('munki::managed_uninstalls', Array, 'merge', [])
+  $managed_installs = lookup('munki::managed_installs', Array, 'unique', [])
+  $managed_uninstalls = lookup('munki::managed_uninstalls', Array, 'unique', [])
 
   if $managed_installs != [] and $managed_uninstalls != [] {
     # merge existing settings with 'LocalOnlyManifest' pref string
