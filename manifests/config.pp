@@ -46,7 +46,7 @@ class munki::config {
   $managed_installs = lookup('munki::managed_installs', Array, 'unique', [])
   $managed_uninstalls = lookup('munki::managed_uninstalls', Array, 'unique', [])
 
-  if $managed_installs != [] and $managed_uninstalls != [] {
+  if $managed_installs != [] or $managed_uninstalls != [] {
     # merge existing settings with 'LocalOnlyManifest' pref string
     $local_only_manifest = {'LocalOnlyManifest' => 'extra_packages'}
     $settings_to_write = merge($mcx_settings, $local_only_manifest)
