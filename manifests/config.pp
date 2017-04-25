@@ -21,9 +21,6 @@ class munki::config {
   $recovery_key_file              = $munki::recovery_key_file
   $perform_auth_restarts          = $munki::perform_auth_restarts
   $use_notification_center_days   = $munki::use_notification_center_days
-  # $managed_installs               = $munki::managed_installs
-  # $managed_uninstalls             = $munki::managed_uninstalls
-
 
   $mcx_settings = {
     'AdditionalHttpHeaders' => $additional_http_headers,
