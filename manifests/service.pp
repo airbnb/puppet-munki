@@ -4,23 +4,24 @@ class munki::service {
   service { 'com.googlecode.munki.managedsoftwareupdate-check':
     ensure => 'running',
     enable => true,
-  }
+  } ->
 
   service { 'com.googlecode.munki.managedsoftwareupdate-install':
     ensure => 'running',
     enable => true,
-  }
+  } ->
 
   service { 'com.googlecode.munki.managedsoftwareupdate-manualcheck':
     ensure => 'running',
     enable => true,
-  }
+  } ->
 
-  if versioncmp($facts['munki_version'], '3.0.0') <= 0 {
+  if versioncmp($facts['munki_version'], '3.0.0') >= 0 {
     service { 'com.googlecode.munki.app_usage_monitor':
-      ensure => 'running',
-      enable => true,
-    }
+      ensure  => 'running',
+      enable  => true,
+      require => Service['com.googlecode.munki.managedsoftwareupdate-manualcheck']
+    } ->
 
     exec { 'munki_reload_launchagents':
       command     => '# get console UID
@@ -56,6 +57,7 @@ class munki::service {
       path        => '/bin:/sbin:/usr/bin:/usr/sbin',
       provider    => 'shell',
       refreshonly => true,
+      require     => Service['com.googlecode.munki.managedsoftwareupdate-manualcheck']
     }
   }
 

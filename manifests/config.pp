@@ -22,6 +22,43 @@ class munki::config {
   $perform_auth_restarts          = $munki::perform_auth_restarts
   $use_notification_center_days   = $munki::use_notification_center_days
 
+  $mcx_settings = {
+    'AdditionalHttpHeaders' => $additional_http_headers,
+    'AppleSoftwareUpdatesOnly' => $apple_software_updates_only,
+    'ClientCertificatePath' => $client_cert_path,
+    'ClientKeyPath' => $client_key_path,
+    'ClientIdentifier' => $client_identifier,
+    'DaysBetweenNotifications' => $days_between_notifications,
+    'InstallAppleSoftwareUpdates' => $install_apple_software_updates,
+    'UnattendedAppleUpdates' => $unattended_apple_updates,
+    'LoggingLevel' => $logging_level,
+    'LogToSyslog' => $log_to_syslog,
+    'MSULogEnabled' => $msu_log_enabled,
+    'SoftwareRepoCACertificate' => $software_repo_ca_cert,
+    'SoftwareRepoURL' => $software_repo_url,
+    'SuppressUserNotification' => $suppress_user_notification,
+    'UseClientCertificate' => $use_client_cert,
+    'ShowRemovalDetail' => $show_removal_detail,
+    'PerformAuthRestarts' => $perform_auth_restarts,
+    'RecoveryKeyFile' => $recovery_key_file,
+    'UseNotificationCenterDays' => $use_notification_center_days
+  }
+  $managed_installs = lookup('munki::managed_installs', Array, 'deep', [])
+  $managed_uninstalls = lookup('munki::managed_uninstalls', Array, 'deep', [])
+
+  if $managed_installs != [] and $managed_uninstalls != [] {
+    # merge existing settings with 'LocalOnlyManifest' pref string
+    $local_only_manifest = {'LocalOnlyManifest' => 'extra_packages'}
+    $settings_to_write = merge($mcx_settings, $local_only_manifest)
+    class {'munki::local_only_manifest' :
+      managed_installs   => $managed_installs,
+      managed_uninstalls => $managed_uninstalls
+    }
+  } else {
+    # just copy the existing to $settings_to_write
+    $settings_to_write = $mcx_settings
+  }
+
   $profile = {
     'PayloadContent' => [
       {
@@ -29,27 +66,7 @@ class munki::config {
           'ManagedInstalls' => {
             'Forced' => [
               {
-                'mcx_preference_settings' => {
-                  'AdditionalHttpHeaders' => $additional_http_headers,
-                  'AppleSoftwareUpdatesOnly' => $apple_software_updates_only,
-                  'ClientCertificatePath' => $client_cert_path,
-                  'ClientKeyPath' => $client_key_path,
-                  'ClientIdentifier' => $client_identifier,
-                  'DaysBetweenNotifications' => $days_between_notifications,
-                  'InstallAppleSoftwareUpdates' => $install_apple_software_updates,
-                  'UnattendedAppleUpdates' => $unattended_apple_updates,
-                  'LoggingLevel' => $logging_level,
-                  'LogToSyslog' => $log_to_syslog,
-                  'MSULogEnabled' => $msu_log_enabled,
-                  'SoftwareRepoCACertificate' => $software_repo_ca_cert,
-                  'SoftwareRepoURL' => $software_repo_url,
-                  'SuppressUserNotification' => $suppress_user_notification,
-                  'UseClientCertificate' => $use_client_cert,
-                  'ShowRemovalDetail' => $show_removal_detail,
-                  'PerformAuthRestarts' => $perform_auth_restarts,
-                  'RecoveryKeyFile' => $recovery_key_file,
-                  'UseNotificationCenterDays' => $use_notification_center_days
-                }
+                'mcx_preference_settings' => $settings_to_write
               }
             ]
           }
