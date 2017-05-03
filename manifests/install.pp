@@ -13,17 +13,17 @@ class munki::install {
     }
   }
 
-  $today = strftime('%s')
-
+  # $today = strftime('%s')
+  $now = time()
   # $today - (86400 seconds in a day * $days_before_broken)
-  $broken_days_ago = $today - (86400 * $days_before_broken)
-
-  if $facts['munki_last_run_unix'] != undef and $facts['munki_last_run_unix'] < $broken_days_ago {
+  $broken_days_ago = $now - (86400 * $days_before_broken)
+  if $facts['munki_last_run_unix'] > 0 and
+  $facts['munki_last_run_unix'] < $broken_days_ago and
+  $facts['munki_running'] == false {
     $force_install = true
   }
-  elsif (macos_package_installed('com.googlecode.munki.core', $munkitools_version) == false or
-    $facts['munki_dir_exists'] == false or
-    $facts['munki_version'] == 'Munki not installed' or
+  elsif ($facts['munki_dir_exists'] == false or
+    $facts['munki_version'] == 0 or
   versioncmp($facts['munki_version'], $munkitools_version) < 0) and
   $facts['munki_running'] == false {
     $force_install = true
