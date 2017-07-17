@@ -1,0 +1,8 @@
+fixtures:
+  symlinks:
+    munki: "#{source_dir}"
+  repositories:
+    stdlib: "git://github.com/puppetlabs/puppetlabs-stdlib.git"
+    mac_profiles_handler: "git://github.com/keeleysam/puppet-mac_profiles_handler.git"
+    apple_package: 'git://github.com/macadmins/puppet-apple_package.git'
+    mac_stdlib: 'git://github.com/macadmins/puppet-mac_stdlib.git'
