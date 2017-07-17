@@ -10,10 +10,7 @@ class munki::auto_run {
     group  => 0,
   }
 
-  if $auto_run_after_install == true and
-  (macos_package_installed('com.googlecode.munki.core', $munkitools_version) == false or
-    $facts['munki_dir_exists'] == false or
-  $facts['munki_version'] == 'Munki not installed') {
+  if $auto_run_after_install == true {
     $launchd = {
       'Disabled'         => false,
       'Label'            => 'org.munki.auto_run',

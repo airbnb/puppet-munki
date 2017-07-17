@@ -55,6 +55,11 @@ class munki::install {
     ]
   }
 
+  if $facts['munki_dir_exists'] == false {
+    # Kick of a run if needed
+    class { '::munki::auto_run': }
+  }
+
   # Make sure everything is owned by root
   if $facts['munki_dir_exists'] == true {
     file {'/usr/local/munki':

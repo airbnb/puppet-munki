@@ -36,7 +36,6 @@ class munki (
   class { '::munki::config': } ->
   class { '::munki::install': } ->
   class { '::munki::service': } ->
-  class { '::munki::auto_run': } ->
   Class['munki']
 
 }
