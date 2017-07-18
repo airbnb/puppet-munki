@@ -1,6 +1,6 @@
 # puppet-munki
 
-This module installs and configures a Munki client.
+This module installs and configures a [Munki client](https://github.com/munki/munki).
 
 ## Configuring with Hiera
 
@@ -63,3 +63,10 @@ munki::managed_installs:
  munki::managed_uninstalls:
   - 'AdobeFlashPlayer'
  ```
+
+ ## Requirements
+
+ * [apple_package](https://github.com/macadmins/puppet-apple_package)
+ * [client_stdlib](https://github.com/macadmins/puppet-client_stdlib)
+ * [stdlib](https://forge.puppetlabs.com/puppetlabs/stdlib)
+ * [mac_profiles_handler](https://github.com/keeleysam/puppet-mac_profiles_handler)

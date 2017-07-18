@@ -5,14 +5,6 @@ class munki::install {
   $days_before_broken = $munki::days_before_broken
   $package_source     = $munki::package_source
 
-  # validate_integer($days_before_broken)
-
-  if ! defined(File["${facts['puppet_vardir']}/packages"]) {
-    file { "${facts['puppet_vardir']}/packages":
-      ensure => directory,
-    }
-  }
-
   # $today = strftime('%s')
   $now = time()
   # $today - (86400 seconds in a day * $days_before_broken)
