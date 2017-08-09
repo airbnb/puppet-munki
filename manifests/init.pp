@@ -33,9 +33,9 @@ class munki (
   Array $managed_uninstalls               = []
 )
 {
-  class { '::munki::config': } ->
-  class { '::munki::install': } ->
-  class { '::munki::service': } ->
-  Class['munki']
+  class { '::munki::config': }
+  -> class { '::munki::install': }
+  -> class { '::munki::service': }
+  -> Class['munki']
 
 }

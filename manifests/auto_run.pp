@@ -23,14 +23,14 @@ class munki::auto_run {
     file {'/usr/local/munki/auto_run.sh':
       mode   => '0755',
       source => 'puppet:///modules/munki/auto_run.sh'
-    } ->
+    }
 
-    file {'/Library/LaunchDaemons/org.munki.auto_run.plist':
+    -> file {'/Library/LaunchDaemons/org.munki.auto_run.plist':
       mode    => '0755',
       content => plist($launchd)
-    } ->
+    }
 
-    service {'org.munki.auto_run':
+    -> service {'org.munki.auto_run':
       ensure => 'running',
       enable => true,
     }
