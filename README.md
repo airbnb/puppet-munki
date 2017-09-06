@@ -28,7 +28,7 @@ class {'munki':
 }
 ```
 
-For all of the configuration options, see `manifests/init.pp`. Most options correlate directly with their equivalent Munki preference.
+For all of the configuration options, see `data/common.yaml`. Most options correlate directly with their equivalent Munki preference.
 
 ## Options that aren't Munki options
 
