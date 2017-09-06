@@ -41,7 +41,8 @@ class munki::config {
     'ShowRemovalDetail' => $show_removal_detail,
     'PerformAuthRestarts' => $perform_auth_restarts,
     'RecoveryKeyFile' => $recovery_key_file,
-    'UseNotificationCenterDays' => $use_notification_center_days
+    'UseNotificationCenterDays' => $use_notification_center_days,
+    'ShowOptionalInstallsForHigherOSVersions' => $show_optional_installs_for_higher_os_versions
   }
   $managed_installs = lookup('munki::managed_installs', Array, 'unique', [])
   $managed_uninstalls = lookup('munki::managed_uninstalls', Array, 'unique', [])
