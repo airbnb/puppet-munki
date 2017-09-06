@@ -5,6 +5,12 @@ class munki::install {
   $days_before_broken = $munki::days_before_broken
   $package_source     = $munki::package_source
 
+  if $package_source == '' {
+    $actual_package_source = "puppet:///modules/bigfiles/munki/munkitools-${munkitools_version}.pkg"
+  } else {
+    $actual_package_source = $package_source
+  }
+
   # $today = strftime('%s')
   $now = time()
   # $today - (86400 seconds in a day * $days_before_broken)
@@ -34,7 +40,7 @@ class munki::install {
   }
 
   apple_package { 'munkitools':
-    source        => $package_source,
+    source        => $actual_package_source,
     version       => $munkitools_version,
     receipt       => 'com.googlecode.munki.core',
     installs      => ['/Applications/Managed Software Center.app/Contents/MacOS/Managed Software Center', '/usr/local/munki/managedsoftwareupdate'], # lint:ignore:140chars

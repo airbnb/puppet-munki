@@ -49,13 +49,20 @@ class munki::config {
   $managed_installs = lookup('munki::managed_installs', Array, 'unique', [])
   $managed_uninstalls = lookup('munki::managed_uninstalls', Array, 'unique', [])
 
+  if $software_update_server_url != '' {
+    $sus_settings = {'software_update_server_url' => $local_only_manifest_name}
+    $settings_with_sus_url = merge($mcx_settings, $sus_settings)
+  } else {
+    $settings_with_sus_url = $mcx_settings
+  }
+
   if $managed_installs != [] or $managed_uninstalls != [] {
     # merge existing settings with 'LocalOnlyManifest' pref string
     $local_only_manifest = {'LocalOnlyManifest' => $local_only_manifest_name}
-    $settings_to_write = merge($mcx_settings, $local_only_manifest)
+    $settings_to_write = merge($settings_with_sus_url, $local_only_manifest)
   } else {
     # just copy the existing to $settings_to_write
-    $settings_to_write = $mcx_settings
+    $settings_to_write = $settings_with_sus_url
   }
 
   class {'munki::local_only_manifest' :
