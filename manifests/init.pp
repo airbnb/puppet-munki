@@ -31,7 +31,8 @@ class munki (
   Integer $use_notification_center_days                  = 3,
   Array $managed_installs                                = [],
   Array $managed_uninstalls                              = [],
-  Boolean $show_optional_installs_for_higher_os_versions = false
+  Boolean $show_optional_installs_for_higher_os_versions = false,
+  String $local_only_manifest_name                       = 'extra_packages'
 )
 {
   class { '::munki::config': }

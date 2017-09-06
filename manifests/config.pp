@@ -1,26 +1,28 @@
 # Configure munki via dynamic profile
 class munki::config {
-  $apple_software_updates_only    = $munki::apple_software_updates_only
-  $client_cert_path               = $munki::client_cert_path
-  $client_identifier              = $munki::client_identifier
-  $client_key_path                = $munki::client_key_path
-  $days_between_notifications     = $munki::days_between_notifications
-  $install_apple_software_updates = $munki::install_apple_software_updates
-  $unattended_apple_updates       = $munki::unattended_apple_updates
-  $logging_level                  = $munki::logging_level
-  $log_to_syslog                  = $munki::log_to_syslog
-  $msu_log_enabled                = $munki::msu_log_enabled
-  $software_repo_ca_cert          = $munki::software_repo_ca_cert
-  $software_repo_url              = $munki::software_repo_url
-  $software_update_server_url     = $munki::software_update_server_url
-  $suppress_user_notification     = $munki::suppress_user_notification
-  $use_client_cert                = $munki::use_client_cert
-  $additional_http_headers        = $munki::additional_http_headers
-  $payload_organization           = $munki::payload_organization
-  $show_removal_detail            = $munki::show_removal_detail
-  $recovery_key_file              = $munki::recovery_key_file
-  $perform_auth_restarts          = $munki::perform_auth_restarts
-  $use_notification_center_days   = $munki::use_notification_center_days
+  $apple_software_updates_only                   = $munki::apple_software_updates_only
+  $client_cert_path                              = $munki::client_cert_path
+  $client_identifier                             = $munki::client_identifier
+  $client_key_path                               = $munki::client_key_path
+  $days_between_notifications                    = $munki::days_between_notifications
+  $install_apple_software_updates                = $munki::install_apple_software_updates
+  $unattended_apple_updates                      = $munki::unattended_apple_updates
+  $logging_level                                 = $munki::logging_level
+  $log_to_syslog                                 = $munki::log_to_syslog
+  $msu_log_enabled                               = $munki::msu_log_enabled
+  $software_repo_ca_cert                         = $munki::software_repo_ca_cert
+  $software_repo_url                             = $munki::software_repo_url
+  $software_update_server_url                    = $munki::software_update_server_url
+  $suppress_user_notification                    = $munki::suppress_user_notification
+  $use_client_cert                               = $munki::use_client_cert
+  $additional_http_headers                       = $munki::additional_http_headers
+  $payload_organization                          = $munki::payload_organization
+  $show_removal_detail                           = $munki::show_removal_detail
+  $recovery_key_file                             = $munki::recovery_key_file
+  $perform_auth_restarts                         = $munki::perform_auth_restarts
+  $use_notification_center_days                  = $munki::use_notification_center_days
+  $show_optional_installs_for_higher_os_versions = $munki::show_optional_installs_for_higher_os_versions
+  $local_only_manifest_name                      = $munki::local_only_manifest_name
 
   $mcx_settings = {
     'AdditionalHttpHeaders' => $additional_http_headers,
@@ -49,7 +51,7 @@ class munki::config {
 
   if $managed_installs != [] or $managed_uninstalls != [] {
     # merge existing settings with 'LocalOnlyManifest' pref string
-    $local_only_manifest = {'LocalOnlyManifest' => 'extra_packages'}
+    $local_only_manifest = {'LocalOnlyManifest' => $local_only_manifest_name}
     $settings_to_write = merge($mcx_settings, $local_only_manifest)
   } else {
     # just copy the existing to $settings_to_write
@@ -58,7 +60,8 @@ class munki::config {
 
   class {'munki::local_only_manifest' :
     managed_installs   => $managed_installs,
-    managed_uninstalls => $managed_uninstalls
+    managed_uninstalls => $managed_uninstalls,
+    manifest_name      => $local_only_manifest_name
   }
 
   $profile = {
