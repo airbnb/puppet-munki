@@ -50,7 +50,7 @@ class munki::config {
   $managed_uninstalls = lookup('munki::managed_uninstalls', Array, 'unique', [])
 
   if $software_update_server_url != '' {
-    $sus_settings = {'software_update_server_url' => $local_only_manifest_name}
+    $sus_settings = {'software_update_server_url' => $software_update_server_url}
     $settings_with_sus_url = merge($mcx_settings, $sus_settings)
   } else {
     $settings_with_sus_url = $mcx_settings
