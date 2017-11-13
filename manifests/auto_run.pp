@@ -20,6 +20,12 @@ class munki::auto_run {
       'RunAtLoad'        => true
     }
 
+    if !defined(File['/usr/local/munki']){
+      file {'/usr/local/munki':
+        ensure => directory
+      }
+    }
+
     file {'/usr/local/munki/auto_run.sh':
       mode   => '0755',
       source => 'puppet:///modules/munki/auto_run.sh'
