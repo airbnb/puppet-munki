@@ -1,12 +1,11 @@
 # munki_managed_installs.rb
 
-require 'puppet/util/plist' if Puppet.features.cfpropertylist?
-
 report_plist = '/Library/Managed Installs/ManagedInstallReport.plist'
 
 Facter.add(:munki_managed_installs) do
   confine kernel: 'Darwin'
   setcode do
+    require 'puppet/util/plist' if Puppet.features.cfpropertylist?
     output = {}
     if File.exist?(report_plist)
       plist = Puppet::Util::Plist.read_plist_file(report_plist)
