@@ -56,7 +56,18 @@ class munki::service {
       path        => '/bin:/sbin:/usr/bin:/usr/sbin',
       provider    => 'shell',
       refreshonly => true,
+    }
 
+    exec {'munki unload old app usgae':
+      command     => '/bin/launchctl unload /Library/LaunchDaemons/com.googlecode.munki.app_usage_monitor.plist
+      exit 0',
+      provider    => 'shell',
+      refreshonly => true,
+      before      => File['/Library/LaunchDaemons/com.googlecode.munki.app_usage_monitor.plist']
+    }
+
+    -> file {'/Library/LaunchDaemons/com.googlecode.munki.app_usage_monitor.plist':
+      ensure => absent
     }
 
   }

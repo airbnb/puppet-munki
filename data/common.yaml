@@ -1,5 +1,5 @@
 ---
-munki::munkitools_version: '3.0.3.3352'
+munki::munkitools_version: '3.3.0.3515'
 munki::apple_software_updates_only: false
 munki::client_cert_path: "%{facts.ssldir}/certs/%{facts.certname}.pem"
 munki::client_identifier: ''
