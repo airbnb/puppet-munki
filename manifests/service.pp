@@ -2,7 +2,7 @@
 class munki::service {
 
   $post_v3_agents_cmd = '# get console UID
-  consoleuser=`/usr/bin/stat -f "%Su" /dev/console | /usr/bin/xargs /usr/bin/id -u`
+  consoleuser=`/usr/bin/stat -f "%u" /dev/console`
 
   /bin/launchctl bootout gui/$consoleuser /Library/LaunchAgents/com.googlecode.munki.ManagedSoftwareCenter.plist
   /bin/launchctl bootout gui/$consoleuser /Library/LaunchAgents/com.googlecode.munki.MunkiStatus.plist
@@ -47,7 +47,7 @@ class munki::service {
 
     -> exec {'munki_app_usage_agent':
       command     => '# get console UID
-  consoleuser=`/usr/bin/stat -f "%Su" /dev/console | /usr/bin/xargs /usr/bin/id -u`
+  consoleuser=`/usr/bin/stat -f "%u" /dev/console`
 
   /bin/launchctl bootout gui/$consoleuser /Library/LaunchAgents/com.googlecode.munki.app_usage_monitor.plist
   /bin/launchctl bootstrap gui/$consoleuser /Library/LaunchAgents/com.googlecode.munki.app_usage_monitor.plist
@@ -88,7 +88,7 @@ class munki::service {
   } else {
     exec { 'munki_reload_launchagents':
       command     => '# get console UID
-  consoleuser=`/usr/bin/stat -f "%Su" /dev/console | /usr/bin/xargs /usr/bin/id -u`
+  consoleuser=`/usr/bin/stat -f "%u" /dev/console`
 
   /bin/launchctl bootout gui/$consoleuser /Library/LaunchAgents/com.googlecode.munki.ManagedSoftwareCenter.plist
   /bin/launchctl bootout gui/$consoleuser /Library/LaunchAgents/com.googlecode.munki.MunkiStatus.plist
