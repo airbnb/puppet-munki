@@ -58,7 +58,7 @@ class munki::install_components {
   }
   elsif ($facts['munki_dir_exists'] == false or
     $facts['munki_version'] == 0 or
-  versioncmp($facts['munki_version'], $munkitools_version) < 0) and
+  versioncmp($facts['munki_version'], $munkitools_core_version) < 0) and
   $facts['munki_running'] == false {
     $force_install = true
     exec {'forget_munki_pkgs':
