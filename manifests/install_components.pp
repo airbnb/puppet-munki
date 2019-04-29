@@ -20,7 +20,7 @@ class munki::install_components {
 
 
   $munkitools_admin_source = $munki::munkitools_admin_source
-  $munkitools_admin_version = $munki::munkitools_adin_version
+  $munkitools_admin_version = $munki::munkitools_admin_version
 
   if $munkitools_admin_source != '' {
     $actual_munkitools_admin_source = $munkitools_admin_source
