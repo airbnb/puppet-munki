@@ -39,7 +39,7 @@ class munki::install_components {
   $munkitools_launchd_source = $munki::munkitools_launchd_source
   $munkitools_launchd_version = $munki::munkitools_launchd_version
 
-  if comm$munkitools_launchd_source != '' {
+  if $munkitools_launchd_source != '' {
     $actual_munkitools_launchd_source = $munkitools_launchd_source
   } else {
     $actual_munkitools_launchd_source = "puppet:///modules/bigfiles/munki/munkitools_launchd-${munkitools_launchd_version}.pkg"
