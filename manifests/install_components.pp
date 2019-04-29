@@ -31,6 +31,7 @@ class munki::install_components {
   $munkitools_app_usage_version = $munki::munkitools_app_usage_version
 
   if $munkitools_app_usage_source != '' {
+    $munkitools_app_usage_version = $munki::munkitools_app_usage_version
   } else {
     $actual_munkitools_app_usage_source = $munkitools_app_usage_source
     $actual_munkitools_app_usage_source = "puppet:///modules/bigfiles/munki/munkitools_app_usage-${munkitools_app_usage_version}.pkg"
