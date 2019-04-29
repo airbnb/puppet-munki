@@ -4,7 +4,6 @@
 # you must specify your own munki repo URL; please don't use http://munki and instead use a https URL.
 
 class munki (
-  String $munkitools_version,
   Boolean $apple_software_updates_only,
   String $client_cert_path,
   String $client_identifier,

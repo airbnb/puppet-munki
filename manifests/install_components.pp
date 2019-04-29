@@ -8,7 +8,7 @@ class munki::install_components {
     $actual_munkitools_source = "puppet:///modules/bigfiles/munki/munkitools-${munkitools_version}.pkg"
   }
 
-    $munkitools_core_source = $munki::munkitools_core_source
+  $munkitools_core_source = $munki::munkitools_core_source
   $munkitools_core_version = $munki::munkitools_core_version
 
   $munkitools_core_source != '' {
@@ -18,7 +18,7 @@ class munki::install_components {
   }
 
 
-    $munkitools_admin_source = $munki::munkitools_admin_source
+  $munkitools_admin_source = $munki::munkitools_admin_source
   $munkitools_admin_version = $munki::munkitools_adin_version
 
   $munkitools_admin_source != '' {
@@ -27,7 +27,7 @@ class munki::install_components {
     $actual_munkitools_admin_source = "puppet:///modules/bigfiles/munki/munkitools_admin-${munkitools_admin_version}.pkg"
   }
 
-    $munkitools_app_usage_source = $munki::munkitools_app_usage_source
+  $munkitools_app_usage_source = $munki::munkitools_app_usage_source
   $munkitools_app_usage_version = $munki::munkitools_app_usage_version
 
   $munkitools_app_usage_source != '' {
@@ -36,7 +36,7 @@ class munki::install_components {
     $actual_munkitools_app_usage_source = "puppet:///modules/bigfiles/munki/munkitools_app_usage-${munkitools_app_usage_version}.pkg"
   }
 
-    $munkitools_launchd_source = $munki::munkitools_launchd_source
+  $munkitools_launchd_source = $munki::munkitools_launchd_source
   $munkitools_launchd_version = $munki::munkitools_launchd_version
 
   $munkitools_launchd_source != '' {
