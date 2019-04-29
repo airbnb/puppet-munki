@@ -13,7 +13,7 @@ class munki::install_components {
   $munkitools_core_version = $munki::munkitools_core_version
 
   if $munkitools_core_source != '' {
-    $actual_munkitools_core_source = $munkitools_source
+    $actual_munkitools_core_source = $munkitools_core_source
   } else {
     $actual_munkitools_core_source = "puppet:///modules/bigfiles/munki/munkitools_core-${munkitools_core_version}.pkg"
   }
