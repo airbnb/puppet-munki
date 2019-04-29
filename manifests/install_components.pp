@@ -39,7 +39,7 @@ class munki::install_components {
   $munkitools_launchd_source = $munki::munkitools_launchd_source
   $munkitools_launchd_version = $munki::munkitools_launchd_version
 
-  if $munkitools_launchd_source != '' {
+  if comm$munkitools_launchd_source != '' {
     $actual_munkitools_launchd_source = $munkitools_launchd_source
   } else {
     $actual_munkitools_launchd_source = "puppet:///modules/bigfiles/munki/munkitools_launchd-${munkitools_launchd_version}.pkg"
@@ -158,7 +158,7 @@ class munki::install_components {
       Service['com.googlecode.munki.managedsoftwareupdate-check'],
       Service['com.googlecode.munki.managedsoftwareupdate-install'],
       Service['com.googlecode.munki.managedsoftwareupdate-manualcheck']
-    ]
+    ],
     http_checksum => $munki::munkitools_launchd_checksum,
     http_username => $munki::http_user,
     http_password => $munki::http_password
