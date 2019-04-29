@@ -51,7 +51,7 @@ class munki::install_aio {
       Service['com.googlecode.munki.managedsoftwareupdate-check'],
       Service['com.googlecode.munki.managedsoftwareupdate-install'],
       Service['com.googlecode.munki.managedsoftwareupdate-manualcheck']
-    ]
+    ],
     http_checksum => $munki::munkitools_checksum,
     http_username => $munki::http_user,
     http_password => $munki::http_password
