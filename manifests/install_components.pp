@@ -2,7 +2,7 @@ class munki::install_components {
   $munkitools_source = $munki::munkitools_source
   $munkitools_version = $munki::munkitools_version
 
-  $munkitools_source != '' {
+  if $munkitools_source != '' {
     $actual_munkitools_source = $munkitools_source
   } else {
     $actual_munkitools_source = "puppet:///modules/bigfiles/munki/munkitools-${munkitools_version}.pkg"
@@ -11,7 +11,7 @@ class munki::install_components {
   $munkitools_core_source = $munki::munkitools_core_source
   $munkitools_core_version = $munki::munkitools_core_version
 
-  $munkitools_core_source != '' {
+  if $munkitools_core_source != '' {
     $actual_munkitools_core_source = $munkitools_source
   } else {
     $actual_munkitools_core_source = "puppet:///modules/bigfiles/munki/munkitools_core-${munkitools_core_version}.pkg"
@@ -21,7 +21,7 @@ class munki::install_components {
   $munkitools_admin_source = $munki::munkitools_admin_source
   $munkitools_admin_version = $munki::munkitools_adin_version
 
-  $munkitools_admin_source != '' {
+  if $munkitools_admin_source != '' {
     $actual_munkitools_admin_source = $munkitools_admin_source
   } else {
     $actual_munkitools_admin_source = "puppet:///modules/bigfiles/munki/munkitools_admin-${munkitools_admin_version}.pkg"
@@ -30,7 +30,7 @@ class munki::install_components {
   $munkitools_app_usage_source = $munki::munkitools_app_usage_source
   $munkitools_app_usage_version = $munki::munkitools_app_usage_version
 
-  $munkitools_app_usage_source != '' {
+  if $munkitools_app_usage_source != '' {
   } else {
     $actual_munkitools_app_usage_source = $munkitools_app_usage_source
     $actual_munkitools_app_usage_source = "puppet:///modules/bigfiles/munki/munkitools_app_usage-${munkitools_app_usage_version}.pkg"
@@ -39,7 +39,7 @@ class munki::install_components {
   $munkitools_launchd_source = $munki::munkitools_launchd_source
   $munkitools_launchd_version = $munki::munkitools_launchd_version
 
-  $munkitools_launchd_source != '' {
+  if $munkitools_launchd_source != '' {
     $actual_munkitools_launchd_source = $munkitools_launchd_source
   } else {
     $actual_munkitools_launchd_source = "puppet:///modules/bigfiles/munki/munkitools_launchd-${munkitools_launchd_version}.pkg"
