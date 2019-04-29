@@ -17,13 +17,15 @@ Facter.add(:munki_managed_installs) do
                               else
                                 'unknown'
                               end
+          # rubocop:disable AlignHash
           output[install['name']] = {
-            'display_name' => install['display_name'],
+            'display_name'      => install['display_name'],
             'name'              => install['name'],
             'installed'         => install['installed'],
             'installed_size'    => install['installed_size'],
             'installed_version' => installed_version
           }
+          # rubocop:enable AlignHash
         end
       end
     end
