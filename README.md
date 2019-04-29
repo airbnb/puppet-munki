@@ -2,6 +2,16 @@
 
 This module installs and configures a [Munki client](https://github.com/munki/munki).
 
+## Changes in version 2 of this module
+
+### Support for remote files
+
+If you use Autopkg to download Munki, it may be more convenient to host the files on your Munki repo. This module now can make use of [remote_file](https://forge.puppet.com/lwf/remote_file) so you do not need to host your packages on your Puppet server. The module will determine whether to use the Puppet fileserver or remote_package depending on whether `puppet:///` is in your source or not.
+
+### Use of component packages
+
+The module can use the individual packages that autopkg generates. If you wish to continue using the all in one package, you should set `munki::use_aio` to `true`.
+
 ## Configuring with Hiera
 
 ``` yaml
