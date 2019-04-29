@@ -1,6 +1,7 @@
 class munki::install_components {
   $munkitools_source = $munki::munkitools_source
   $munkitools_version = $munki::munkitools_version
+  $days_before_broken = $munki::days_before_broken
 
   if $munkitools_source != '' {
     $actual_munkitools_source = $munkitools_source
