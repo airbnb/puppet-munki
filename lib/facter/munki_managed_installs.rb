@@ -23,7 +23,7 @@ Facter.add(:munki_managed_installs) do
             'name'              => install['name'],
             'installed'         => install['installed'],
             'installed_size'    => install['installed_size'],
-            'installed_version' => installed_version
+            'installed_version' => installed_version,
           }
           # rubocop:enable AlignHash
         end
