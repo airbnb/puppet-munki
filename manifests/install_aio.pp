@@ -1,4 +1,5 @@
 class munki::install_aio {
+  $days_before_broken = $munki::days_before_broken
   $package_source = $munki::package_source
   $munkitools_source = $munki::munkitools_source
   $munkitools_version = $munki::munkitools_version
