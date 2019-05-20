@@ -30,7 +30,7 @@ munki::show_optional_installs_for_higher_os_versions: false
 munki::local_only_manifest_name: 'extra_packages'
 munki::use_aio: false
 munki::munkitools_admin_checksum: ''
-munki::munkitools_admin_receipt": ''
+munki::munkitools_admin_receipt: ''
 munki::munkitools_admin_source: ''
 munki::munkitools_admin_version: ''
 munki::munkitools_app_usage_checksum: ''
