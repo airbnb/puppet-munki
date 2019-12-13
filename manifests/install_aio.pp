@@ -34,6 +34,7 @@ class munki::install_aio {
       /usr/sbin/pkgutil --forget com.googlecode.munki.core
       /usr/sbin/pkgutil --forget com.googlecode.munki.launchd
       /usr/sbin/pkgutil --forget com.googlecode.munki.app_usage
+      /usr/sbin/pkgutil --forget com.googlecode.munki.python
       exit 0',
       before  => Apple_package['munkitools']
     }

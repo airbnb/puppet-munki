@@ -18,6 +18,15 @@ class munki::install_components {
     $actual_munkitools_core_source = "puppet:///modules/bigfiles/munki/munkitools_core-${munkitools_core_version}.pkg"
   }
 
+  $munkitools_python_source = $munki::munkitools_python_source
+  $munkitools_python_version = $munki::munkitools_python_version
+
+  if $munkitools_python_source != '' {
+    $actual_munkitools_python_source = $munkitools_python_source
+  } else {
+    $actual_munkitools_python_source = "puppet:///modules/bigfiles/munki/munkitools_python-${munkitools_python_version}.pkg"
+  }
+
 
   $munkitools_admin_source = $munki::munkitools_admin_source
   $munkitools_admin_version = $munki::munkitools_admin_version
@@ -90,6 +99,19 @@ class munki::install_components {
     http_checksum => $munki::munkitools_checksum,
     http_username => $munki::http_user,
     http_password => $munki::http_password
+  }
+
+  if versioncmp($munkitools_version, '4.0.0.3881') >= 0 {
+    apple_package { 'munkitools_python':
+      source        => $actual_munkitools_python_source,
+      version       => $munkitools_python_version,
+      receipt       => $munki::munkitools_python_receipt,
+      installs      => ['/usr/local/munki/Python.framework', '/usr/local/munki/python'],
+      force_install => $force_install,
+      http_checksum => $munki::munkitools_python_checksum,
+      http_username => $munki::http_user,
+      http_password => $munki::http_password
+    }
   }
 
   apple_package { 'munkitools_core':
