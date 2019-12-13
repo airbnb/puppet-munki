@@ -101,7 +101,7 @@ class munki::install_components {
     http_password => $munki::http_password
   }
 
-  if versioncmp($munkitools_version, '4.0.0.3881') >= 0 {
+  if versioncmp($munkitools_version, '4.0.0.3881') != -1 {
     apple_package { 'munkitools_python':
       source        => $actual_munkitools_python_source,
       version       => $munkitools_python_version,
