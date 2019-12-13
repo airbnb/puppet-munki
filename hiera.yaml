@@ -5,5 +5,7 @@ defaults:
   datadir: data
   data_hash: yaml_data
 hierarchy:
+  - name: "test"
+    path: "test.yaml"
   - name: "common"
     path: "common.yaml"
