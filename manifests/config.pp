@@ -14,6 +14,7 @@ class munki::config {
   $software_repo_url                             = $munki::software_repo_url
   $software_update_server_url                    = $munki::software_update_server_url
   $suppress_user_notification                    = $munki::suppress_user_notification
+  $suppress_loginwindow_install                  = $munki::suppress_loginwindow_install
   $use_client_cert                               = $munki::use_client_cert
   $additional_http_headers                       = $munki::additional_http_headers
   $payload_organization                          = $munki::payload_organization
@@ -38,6 +39,7 @@ class munki::config {
     'MSULogEnabled' => $msu_log_enabled,
     'SoftwareRepoCACertificate' => $software_repo_ca_cert,
     'SoftwareRepoURL' => $software_repo_url,
+    'SuppressLoginwindowInstall' => $suppress_loginwindow_install,
     'SuppressUserNotification' => $suppress_user_notification,
     'UseClientCertificate' => $use_client_cert,
     'ShowRemovalDetail' => $show_removal_detail,

@@ -13,6 +13,7 @@ munki::msu_log_enabled: false
 munki::software_repo_ca_cert: "%{facts.ssldir}/certs/ca.pem"
 munki::software_repo_url: ''
 munki::software_update_server_url: ''
+munki::suppress_loginwindow_install: false
 munki::suppress_user_notification: false
 munki::use_client_cert: false
 munki::show_removal_detail: false
