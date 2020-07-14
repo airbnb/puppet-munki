@@ -14,21 +14,21 @@ The module can use the individual packages that autopkg generates. If you wish t
 
 ## Configuring with Hiera
 
-``` yaml
+```yaml
 ---
 classes:
- - munki
+  - munki
 
 munki::use_client_cert: false
 munki::software_repo_url: "https://munki.example.com"
-munki::additional_http_headers: ['Authorization: Basic abc12345==']
+munki::additional_http_headers: ["Authorization: Basic abc12345=="]
 munki::package_source: "puppet:///modules/a_module_with_munkis_pkg/munkitools.pkg"
 munki::days_before_broken: 14
 ```
 
 ## Configuring directly in Puppet
 
-``` puppet
+```puppet
 class {'munki':
     use_client_cert         => false,
     software_repo_url       => "https://munki.example.com",
@@ -70,34 +70,34 @@ This is the file name of the local manifest. This defaults to `extra_packages`, 
 
 This module is able to make use of local only manifests, which allows you to use Hiera to assign software to your nodes. As this composites the configuration from all levels of your hierarchy via the `lookup` function, you _must_ use Hiera (rather than Puppet code directly) to configure this.
 
-``` yaml
+```yaml
 # data/serial_number/YOURSERIALNUMBER.yaml
 munki::managed_installs:
  - 'windows10_vm'
 
  munki::managed_uninstalls:
   - 'AdobeFlashPlayer'
- ```
+```
 
- Using the `lookup` function allows you to specify managed installs and uninstalls at different places in your hierarchy, so for example, you can specify installs for all of your machines using something like the below:
+Using the `lookup` function allows you to specify managed installs and uninstalls at different places in your hierarchy, so for example, you can specify installs for all of your machines using something like the below:
 
- ``` yaml
- # data/osfamily/Darwin.yaml
- munki::managed_installs:
-  - 'GoogleChrome'
+```yaml
+# data/osfamily/Darwin.yaml
+munki::managed_installs:
+  - "GoogleChrome"
 ```
 
 And then configuring a one off install for a particular machine:
 
-``` yaml
+```yaml
 # data/serial_number/ABC123.yaml
 munki::managed_installs:
- - 'Firefox'
+  - "Firefox"
 ```
 
 Which would produce a local client manifest (at `/Library/Managed Installs/manifests/extra_packages`) for the machine with the serial number ABC123 of:
 
-``` xml
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -112,9 +112,9 @@ Which would produce a local client manifest (at `/Library/Managed Installs/manif
 </plist>
 ```
 
- ## Requirements
+## Requirements
 
- * [apple_package](https://github.com/macadmins/puppet-apple_package)
- * [client_stdlib](https://github.com/macadmins/puppet-client_stdlib)
- * [stdlib](https://forge.puppetlabs.com/puppetlabs/stdlib)
- * [mac_profiles_handler](https://github.com/keeleysam/puppet-mac_profiles_handler)
+- [apple_package](https://github.com/macadmins/puppet-apple_package)
+- [client_stdlib](https://github.com/macadmins/puppet-client_stdlib)
+- [stdlib](https://forge.puppetlabs.com/puppetlabs/stdlib)
+- [mac_profiles_handler](https://github.com/macadmins/puppet-mac_profiles_handler)
