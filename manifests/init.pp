@@ -18,6 +18,7 @@ class munki (
   String $software_repo_url,
   String $software_update_server_url,
   Boolean $suppress_user_notification,
+  Boolean $suppress_loginwindow_install,
   Boolean $use_client_cert,
   Boolean $show_removal_detail,
   Integer $days_before_broken,
