@@ -9,7 +9,7 @@ Facter.add(:munki_last_run) do
     if File.exist?(self_serve_manifest)
       require 'puppet/util/plist' if Puppet.features.cfpropertylist?
       plist = Puppet::Util::Plist.read_plist_file(self_serve_manifest)
-      managed_installs = plist['mangaged_installed']
+      managed_installs = plist['managed_installs']
       managed_installs
     end
   end
