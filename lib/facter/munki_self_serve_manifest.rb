@@ -1,7 +1,7 @@
 # munki_self_serve_manifest.rb
 
 # Get the plist dynamically eventually
-self_serve_manifest = '/Library/Managed Installs/manifests/SelfServe'
+self_serve_manifest = '/Library/Managed Installs/manifests/SelfServeManifest'
 
 Facter.add(:munki_self_serve_manifest) do
   confine kernel: 'Darwin'
