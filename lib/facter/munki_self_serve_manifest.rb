@@ -3,7 +3,7 @@
 # Get the plist dynamically eventually
 self_serve_manifest = '/Library/Managed Installs/manifests/SelfServe'
 
-Facter.add(:munki_last_run) do
+Facter.add(:munki_self_serve_manifest) do
   confine kernel: 'Darwin'
   setcode do
     if File.exist?(self_serve_manifest)
