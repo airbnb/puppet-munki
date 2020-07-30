@@ -29,7 +29,7 @@ munki::managed_installs: []
 munki::managed_uninstalls: []
 munki::show_optional_installs_for_higher_os_versions: false
 munki::local_only_manifest_name: 'extra_packages'
-munki::use_aio: true
+munki::use_aio: false
 munki::munkitools_admin_checksum: ''
 munki::munkitools_admin_receipt: ''
 munki::munkitools_admin_source: ''
