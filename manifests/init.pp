@@ -60,6 +60,7 @@ class munki (
   Boolean $use_aio,
   String $http_user,
   String $http_password,
+  Boolean $munki_python,
 )
 {
   class { '::munki::config': }

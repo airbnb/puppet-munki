@@ -70,6 +70,10 @@ This is the file name of the local manifest. This defaults to `extra_packages`, 
 
 This module is able to make use of local only manifests, which allows you to use Hiera to assign software to your nodes. As this composites the configuration from all levels of your hierarchy via the `lookup` function, you _must_ use Hiera (rather than Puppet code directly) to configure this.
 
+## munki_python
+
+Set this to false if you do not wish Munki to install it's own Python.
+
 ```yaml
 # data/serial_number/YOURSERIALNUMBER.yaml
 munki::managed_installs:
