@@ -57,9 +57,9 @@ class munki::config {
 
   if $software_update_server_url != '' {
     $sus_settings = {'software_update_server_url' => $software_update_server_url}
-    $settings_with_sus_url = merge($cert_settings, $sus_settings)
+    $settings_with_sus_url = merge($settings_with_cert, $sus_settings)
   } else {
-    $settings_with_sus_url = $cert_settings
+    $settings_with_sus_url = $settings_with_cert
   }
 
   if $managed_installs != [] or $managed_uninstalls != [] {
