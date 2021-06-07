@@ -1,29 +1,29 @@
 # munki_managed_installs.rb
 
-report_plist = '/Library/Managed Installs/ManagedInstallReport.plist'
+report_plist = "/Library/Managed Installs/ManagedInstallReport.plist"
 
 Facter.add(:munki_managed_installs) do
-  confine kernel: 'Darwin'
+  confine kernel: "Darwin"
   setcode do
-    require 'puppet/util/plist' if Puppet.features.cfpropertylist?
+    require "puppet/util/plist" if Puppet.features.cfpropertylist?
     output = {}
     if File.exist?(report_plist)
       plist = Puppet::Util::Plist.read_plist_file(report_plist)
-      if plist.include? 'ManagedInstalls'
-        plist['ManagedInstalls'].each do |install|
+      if plist.include? "ManagedInstalls"
+        plist["ManagedInstalls"].each do |install|
           # This was added in Munki 2.8, handle that
-          installed_version = if install.include? 'installed_version'
-                                install['installed_version']
-                              else
-                                'unknown'
-                              end
+          installed_version = if install.include? "installed_version"
+              install["installed_version"]
+            else
+              "unknown"
+            end
           # rubocop:disable AlignHash
-          output[install['name']] = {
-            'display_name'      => install['display_name'],
-            'name'              => install['name'],
-            'installed'         => install['installed'],
-            'installed_size'    => install['installed_size'],
-            'installed_version' => installed_version
+          output[install["name"]] = {
+            "display_name" => install["display_name"],
+            "name" => install["name"],
+            "installed" => install["installed"],
+            "installed_size" => install["installed_size"],
+            "installed_version" => installed_version,
           }
           # rubocop:enable AlignHash
         end
