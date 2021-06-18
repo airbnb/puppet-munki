@@ -61,6 +61,7 @@ class munki (
   String $http_user,
   String $http_password,
   Boolean $munki_python,
+  Boolean $manage_profile,
 )
 {
   class { '::munki::config': }
