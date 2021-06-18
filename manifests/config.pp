@@ -24,6 +24,7 @@ class munki::config {
   $use_notification_center_days                  = $munki::use_notification_center_days
   $show_optional_installs_for_higher_os_versions = $munki::show_optional_installs_for_higher_os_versions
   $local_only_manifest_name                      = $munki::local_only_manifest_name
+  $manage_profile                                = $munki::manage_profile
 
   $mcx_settings = {
     'AdditionalHttpHeaders' => $additional_http_headers,
@@ -107,10 +108,12 @@ class munki::config {
     'PayloadVersion' => 1
   }
 
-  mac_profiles_handler::manage { 'ManagedInstalls':
-    ensure      => present,
-    file_source => plist($profile),
-    type        => 'template',
+  if $manage_profile {
+    mac_profiles_handler::manage { 'ManagedInstalls':
+      ensure      => present,
+      file_source => plist($profile),
+      type        => 'template',
+    }
   }
 
 }
