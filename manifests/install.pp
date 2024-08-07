@@ -20,9 +20,10 @@ class munki::install {
   # Make sure everything is owned by root
   if $facts['munki_dir_exists'] == true {
     file {'/usr/local/munki':
-      owner   => 'root',
-      group   => 'wheel',
-      recurse => true,
+      owner     => 'root',
+      group     => 'wheel',
+      recurse   => true,
+      max_files => -1,
     }
   }
 
