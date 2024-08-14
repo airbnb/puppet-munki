@@ -12,6 +12,6 @@ Facter.add(:munki_last_run) do
       plist = Puppet::Util::Plist.read_plist_file(report_plist)
       last_run = plist["StartTime"]
     end
-    last_run
+    last_run || "never"
   end
 end
