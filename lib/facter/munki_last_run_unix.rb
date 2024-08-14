@@ -10,7 +10,7 @@ Facter.add(:munki_last_run_unix) do
     if munki_last_run == "never"
       last_run = 0
     else
-     last_run = Time.parse(munki_last_run).to_i
+      last_run = Time.parse(munki_last_run).to_i
     end
     last_run
   end
