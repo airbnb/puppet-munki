@@ -12,6 +12,6 @@ Facter.add(:munki_last_run_unix) do
     else
       last_run = Time.parse(munki_last_run).to_i
     end
-    last_run
+    last_run || 0
   end
 end
