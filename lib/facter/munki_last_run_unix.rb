@@ -5,11 +5,13 @@ require "time"
 Facter.add(:munki_last_run_unix) do
   confine kernel: "Darwin"
   setcode do
+    last_run = 0
     munki_last_run = Facter.value(:munki_last_run)
     if munki_last_run == "never"
-      0
+      last_run = 0
     else
-      Time.parse(munki_last_run).to_i
+     last_run = Time.parse(munki_last_run).to_i
     end
+    last_run
   end
 end
