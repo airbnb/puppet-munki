@@ -62,6 +62,7 @@ class munki (
   String $http_password,
   Boolean $munki_python,
   Boolean $manage_profile,
+  Integer $aggressive_update_notification_days,
 )
 {
   class { '::munki::config': }
