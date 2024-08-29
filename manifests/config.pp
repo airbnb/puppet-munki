@@ -1,5 +1,6 @@
 # Configure munki via dynamic profile
 class munki::config {
+  $aggressive_update_notification_days           = $munki::aggressive_update_notification_days
   $apple_software_updates_only                   = $munki::apple_software_updates_only
   $client_cert_path                              = $munki::client_cert_path
   $client_identifier                             = $munki::client_identifier
@@ -28,6 +29,7 @@ class munki::config {
 
   $mcx_settings = {
     'AdditionalHttpHeaders' => $additional_http_headers,
+    'AggressiveUpdateNotificationDays' => $aggressive_update_notification_days,
     'AppleSoftwareUpdatesOnly' => $apple_software_updates_only,
     'ClientIdentifier' => $client_identifier,
     'DaysBetweenNotifications' => $days_between_notifications,

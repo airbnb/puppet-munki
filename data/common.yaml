@@ -45,7 +45,6 @@ munki::munkitools_core_source: ''
 munki::munkitools_core_version: ''
 munki::munkitools_receipt: ''
 munki::munkitools_source: ''
-munki::munkitools_source: ''
 munki::munkitools_launchd_checksum: ''
 munki::munkitools_launchd_receipt: ''
 munki::munkitools_launchd_source: ''
@@ -58,3 +57,4 @@ munki::http_user: ''
 munki::http_password: ''
 munki::munki_python: true
 munki::manage_profile: true
+munki::aggressive_update_notification_days: 14
