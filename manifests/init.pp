@@ -73,6 +73,12 @@ class munki (
   Boolean $munki_libs,
   Boolean $manage_profile,
   Integer $aggressive_update_notification_days,
+  Boolean $msc_offer_to_quit_blocking_apps,
+  Boolean $msc_offer_to_force_quit_blocking_apps,
+  Boolean $msc_offer_to_update_others,
+  Array $custom_sidebar_items,
+  Integer[0, 10] $download_retries,
+  Integer[1, 30] $download_retry_sleep_seconds,
 )
 {
   class { '::munki::config': }

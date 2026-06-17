@@ -26,6 +26,12 @@ class munki::config {
   $show_optional_installs_for_higher_os_versions = $munki::show_optional_installs_for_higher_os_versions
   $local_only_manifest_name                      = $munki::local_only_manifest_name
   $manage_profile                                = $munki::manage_profile
+  $msc_offer_to_quit_blocking_apps               = $munki::msc_offer_to_quit_blocking_apps
+  $msc_offer_to_force_quit_blocking_apps         = $munki::msc_offer_to_force_quit_blocking_apps
+  $msc_offer_to_update_others                    = $munki::msc_offer_to_update_others
+  $custom_sidebar_items                          = $munki::custom_sidebar_items
+  $download_retries                              = $munki::download_retries
+  $download_retry_sleep_seconds                  = $munki::download_retry_sleep_seconds
 
   $mcx_settings = {
     'AdditionalHttpHeaders' => $additional_http_headers,
@@ -33,10 +39,15 @@ class munki::config {
     'AppleSoftwareUpdatesOnly' => $apple_software_updates_only,
     'ClientIdentifier' => $client_identifier,
     'DaysBetweenNotifications' => $days_between_notifications,
+    'DownloadRetries' => $download_retries,
+    'DownloadRetrySleepSeconds' => $download_retry_sleep_seconds,
     'InstallAppleSoftwareUpdates' => $install_apple_software_updates,
     'UnattendedAppleUpdates' => $unattended_apple_updates,
     'LoggingLevel' => $logging_level,
     'LogToSyslog' => $log_to_syslog,
+    'MSCOfferToQuitBlockingApps' => $msc_offer_to_quit_blocking_apps,
+    'MSCOfferToForceQuitBlockingApps' => $msc_offer_to_force_quit_blocking_apps,
+    'MSCOfferToUpdateOthers' => $msc_offer_to_update_others,
     'MSULogEnabled' => $msu_log_enabled,
     'SoftwareRepoURL' => $software_repo_url,
     'SuppressLoginwindowInstall' => $suppress_loginwindow_install,
@@ -51,11 +62,17 @@ class munki::config {
   $managed_installs = lookup('munki::managed_installs', Array, 'unique', [])
   $managed_uninstalls = lookup('munki::managed_uninstalls', Array, 'unique', [])
 
+  if $custom_sidebar_items != [] {
+    $settings_with_sidebar = merge($mcx_settings, {'CustomSidebarItems' => $custom_sidebar_items})
+  } else {
+    $settings_with_sidebar = $mcx_settings
+  }
+
   if $use_client_cert == true {
     $cert_settings = {'ClientCertificatePath' => $client_cert_path, 'ClientKeyPath' => $client_key_path, 'SoftwareRepoCACertificate' => $software_repo_ca_cert}
-    $settings_with_cert = merge($mcx_settings, $cert_settings)
+    $settings_with_cert = merge($settings_with_sidebar, $cert_settings)
   } else {
-    $settings_with_cert = $mcx_settings
+    $settings_with_cert = $settings_with_sidebar
   }
 
   if $software_update_server_url != '' {

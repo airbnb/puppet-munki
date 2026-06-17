@@ -68,3 +68,9 @@ munki::munki_pythonlibs: false
 munki::munki_libs: false
 munki::manage_profile: true
 munki::aggressive_update_notification_days: 14
+munki::msc_offer_to_quit_blocking_apps: false
+munki::msc_offer_to_force_quit_blocking_apps: false
+munki::msc_offer_to_update_others: false
+munki::custom_sidebar_items: []
+munki::download_retries: 0
+munki::download_retry_sleep_seconds: 10
