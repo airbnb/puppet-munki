@@ -12,6 +12,13 @@ class munki::install_components {
   $munkitools_core_source = $munki::munkitools_core_source
   $munkitools_core_version = $munki::munkitools_core_version
 
+  # Munki 7 (the Swift rewrite) changed both the set of component packages and
+  # the on-disk layout used to detect them. Gate on the core package version so
+  # a single repo can roll out both: < 7 uses the Munki 6 packages/paths,
+  # >= 7 uses the Munki 7 packages/paths. An unset core version (the default)
+  # resolves to false, preserving the Munki 6 layout.
+  $is_munki7 = versioncmp($munkitools_core_version, '7') >= 0
+
   if $munkitools_core_source != '' {
     $actual_munkitools_core_source = $munkitools_core_source
   } else {
@@ -121,14 +128,47 @@ class munki::install_components {
     http_password => $munki::http_password
   }
 
-  # Legacy: the bundled Python interpreter package. Munki 7 no longer ships this
-  # so set munki::munki_python to false for Munki 7 hosts
-  if versioncmp($munkitools_python_version, '3.8.0') > 0 {
-    $python_installs = ['/usr/local/munki/Python.framework', '/usr/local/munki/munki-python']
-  } else {
-    $python_installs = ['/usr/local/munki/Python.framework', '/usr/local/munki/python']
-  }
-  if $munki::munki_python {
+  # Python handling differs by Munki version. Munki 6 and earlier bundle a Python
+  # interpreter in munkitools_python. Munki 7 splits this into munkitools_pythonlibs
+  # (the munkilib Python library) and munkitools_libs (Swift runtime dylibs). Each
+  # package keeps its own toggle so a single repo can roll out both Munki 6 and 7.
+  if $is_munki7 {
+    # Munki 7: the munkilib Python library, used by the admin CLI tools.
+    # Replaces the on-disk half of the old munkitools_python package.
+    if $munki::munki_pythonlibs {
+      apple_package { 'munkitools_pythonlibs':
+        source        => $actual_munkitools_pythonlibs_source,
+        version       => $munkitools_pythonlibs_version,
+        receipt       => $munki::munkitools_pythonlibs_receipt,
+        installs      => ['/usr/local/munki/munkilib'],
+        force_install => $force_install,
+        http_checksum => $munki::munkitools_pythonlibs_checksum,
+        http_username => $munki::http_user,
+        http_password => $munki::http_password
+      }
+    }
+
+    # Munki 7: Swift runtime dylibs. Only needed on macOS < 12; newer macOS ships
+    # the Swift concurrency runtime in the OS.
+    if $munki::munki_libs and versioncmp($facts['os']['macosx']['version']['major'], '12') < 0 {
+      apple_package { 'munkitools_libs':
+        source        => $actual_munkitools_libs_source,
+        version       => $munkitools_libs_version,
+        receipt       => $munki::munkitools_libs_receipt,
+        installs      => ['/usr/local/munki/lib/libswift_Concurrency.dylib'],
+        force_install => $force_install,
+        http_checksum => $munki::munkitools_libs_checksum,
+        http_username => $munki::http_user,
+        http_password => $munki::http_password
+      }
+    }
+  } elsif $munki::munki_python {
+    # Munki 6 and earlier: the bundled Python interpreter package.
+    if versioncmp($munkitools_python_version, '3.8.0') > 0 {
+      $python_installs = ['/usr/local/munki/Python.framework', '/usr/local/munki/munki-python']
+    } else {
+      $python_installs = ['/usr/local/munki/Python.framework', '/usr/local/munki/python']
+    }
     apple_package { 'munkitools_python':
       source        => $actual_munkitools_python_source,
       version       => $munkitools_python_version,
@@ -141,49 +181,33 @@ class munki::install_components {
     }
   }
 
-  # Munki 7: the munkilib Python library, used by the admin CLI tools
-  # Replaces the on-disk half of the old munkitools_python package
-  if $munki::munki_pythonlibs {
-    apple_package { 'munkitools_pythonlibs':
-      source        => $actual_munkitools_pythonlibs_source,
-      version       => $munkitools_pythonlibs_version,
-      receipt       => $munki::munkitools_pythonlibs_receipt,
-      installs      => ['/usr/local/munki/munkilib'],
-      force_install => $force_install,
-      http_checksum => $munki::munkitools_pythonlibs_checksum,
-      http_username => $munki::http_user,
-      http_password => $munki::http_password
-    }
-  }
-
-  # Munki 7: Swift runtime dylibs. Only needed on macOS < 12
-  if $munki::munki_libs and versioncmp($facts['os']['macosx']['version']['major'], '12') < 0 {
-    apple_package { 'munkitools_libs':
-      source        => $actual_munkitools_libs_source,
-      version       => $munkitools_libs_version,
-      receipt       => $munki::munkitools_libs_receipt,
-      installs      => ['/usr/local/munki/lib/libswift_Concurrency.dylib'],
-      force_install => $force_install,
-      http_checksum => $munki::munkitools_libs_checksum,
-      http_username => $munki::http_user,
-      http_password => $munki::http_password
-    }
-  }
-
-  apple_package { 'munkitools_core':
-    source        => $actual_munkitools_core_source,
-    version       => $munkitools_core_version,
-    receipt       => $munki::munkitools_core_receipt,
-    # Munki 7 (Swift rewrite) moved most helper binaries under libexec/ and
-    # dropped ptyexec and supervisor
-    installs      => [
+  # Munki 7 (Swift rewrite) moved most helper binaries under libexec/ and dropped
+  # ptyexec and supervisor; Munki 6 keeps them at the top level of /usr/local/munki.
+  if $is_munki7 {
+    $munkitools_core_installs = [
       '/usr/local/munki/managedsoftwareupdate',
       '/usr/local/munki/removepackages',
       '/usr/local/munki/libexec/authrestartd',
       '/usr/local/munki/libexec/launchapp',
       '/usr/local/munki/libexec/logouthelper',
       '/usr/local/munki/libexec/precache_agent',
-    ],
+    ]
+  } else {
+    $munkitools_core_installs = [
+      '/usr/local/munki/managedsoftwareupdate',
+      '/usr/local/munki/authrestartd',
+      '/usr/local/munki/launchapp',
+      '/usr/local/munki/ptyexec',
+      '/usr/local/munki/removepackages',
+      '/usr/local/munki/supervisor',
+    ]
+  }
+
+  apple_package { 'munkitools_core':
+    source        => $actual_munkitools_core_source,
+    version       => $munkitools_core_version,
+    receipt       => $munki::munkitools_core_receipt,
+    installs      => $munkitools_core_installs,
     force_install => $force_install,
     http_checksum => $munki::munkitools_core_checksum,
     http_username => $munki::http_user,
@@ -207,33 +231,59 @@ class munki::install_components {
     http_password => $munki::http_password
   }
 
+  # Munki 7 moved the app usage binaries under libexec/; Munki 6 keeps them at the
+  # top level. The LaunchDaemon/LaunchAgent plists are unchanged between versions.
+  if $is_munki7 {
+    $munkitools_app_usage_installs = [
+      '/Library/LaunchDaemons/com.googlecode.munki.appusaged.plist',
+      '/Library/LaunchAgents/com.googlecode.munki.app_usage_monitor.plist',
+      '/usr/local/munki/libexec/appusaged',
+      '/usr/local/munki/libexec/app_usage_monitor',
+    ]
+  } else {
+    $munkitools_app_usage_installs = [
+      '/Library/LaunchDaemons/com.googlecode.munki.appusaged.plist',
+      '/Library/LaunchAgents/com.googlecode.munki.app_usage_monitor.plist',
+      '/usr/local/munki/appusaged',
+      '/usr/local/munki/app_usage_monitor',
+    ]
+  }
+
   apple_package { 'munkitools_app_usage':
     source        => $actual_munkitools_app_usage_source,
     version       => $munkitools_app_usage_version,
     receipt       => $munki::munkitools_app_usage_receipt,
-    installs      => [
-      '/Library/LaunchDaemons/com.googlecode.munki.appusaged.plist',
-      '/Library/LaunchAgents/com.googlecode.munki.app_usage_monitor.plist',
-      '/usr/local/munki/libexec/appusaged',
-      '/usr/local/munki/libexec/app_usage_monitor'
-    ],
+    installs      => $munkitools_app_usage_installs,
     force_install => $force_install,
     http_checksum => $munki::munkitools_app_usage_checksum,
     http_username => $munki::http_user,
     http_password => $munki::http_password
   }
 
-  apple_package { 'munkitools_launchd':
-    source        => $actual_munkitools_launchd_source,
-    version       => $munkitools_launchd_version,
-    receipt       => $munki::munkitools_launchd_receipt,
-    installs      => [
+  # Munki 7's launchd package adds an authrestartd LaunchDaemon that Munki 6 does
+  # not ship.
+  if $is_munki7 {
+    $munkitools_launchd_installs = [
       '/Library/LaunchDaemons/com.googlecode.munki.managedsoftwareupdate-check.plist',
       '/Library/LaunchDaemons/com.googlecode.munki.managedsoftwareupdate-install.plist',
       '/Library/LaunchDaemons/com.googlecode.munki.managedsoftwareupdate-manualcheck.plist',
       '/Library/LaunchDaemons/com.googlecode.munki.logouthelper.plist',
       '/Library/LaunchDaemons/com.googlecode.munki.authrestartd.plist',
-    ],
+    ]
+  } else {
+    $munkitools_launchd_installs = [
+      '/Library/LaunchDaemons/com.googlecode.munki.managedsoftwareupdate-check.plist',
+      '/Library/LaunchDaemons/com.googlecode.munki.managedsoftwareupdate-install.plist',
+      '/Library/LaunchDaemons/com.googlecode.munki.managedsoftwareupdate-manualcheck.plist',
+      '/Library/LaunchDaemons/com.googlecode.munki.logouthelper.plist',
+    ]
+  }
+
+  apple_package { 'munkitools_launchd':
+    source        => $actual_munkitools_launchd_source,
+    version       => $munkitools_launchd_version,
+    receipt       => $munki::munkitools_launchd_receipt,
+    installs      => $munkitools_launchd_installs,
     force_install => $force_install,
     notify        => [
       Exec['munki_reload_launchagents'],
