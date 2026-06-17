@@ -157,7 +157,7 @@ class munki::install_components {
   }
 
   # Munki 7: Swift runtime dylibs. Only needed on macOS < 12
-  if $munki::munki_libs and versioncmp($facts['os']['release']['major'], '12') < 0 {
+  if $munki::munki_libs and versioncmp($facts['os']['macosx']['version']['major'], '12') < 0 {
     apple_package { 'munkitools_libs':
       source        => $actual_munkitools_libs_source,
       version       => $munkitools_libs_version,
